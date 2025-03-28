@@ -1,3 +1,48 @@
+@extends('layouts.main')
+
+@section('title' , 'SingUp')
+
+@section('style')
+<link rel="stylesheet" href="{{asset('css/login-signup.css')}}">
+@endsection
+
+@section('section')
+<section>
+    <div class="content">
+        <form action="" method="">
+            <h2>Create Account</h2>
+            <div class="input"><input type="text" required placeholder="Name"></div>
+            <div class="input"><input type="email" required placeholder="Email"></div>
+            <div class="input"><input type="password" required placeholder="Password"></div>
+            <div class="input"><input type="password" required placeholder="Confirm Password"></div>
+            <div class="profile">
+                <div class="label"><label for="profile">Upload Profile Image</label></div>
+                <div class="input"><input id="profile" required type="file"></div>
+            </div>
+            <div class="T-A-S">
+                <div>
+                    <input id="techer" type="radio" value="1" required name="type">
+                    <label for="techer">Techer</label>
+                </div>
+                <div>
+                    <input id="student" type="radio" value="2" required name="type">
+                    <label for="student">Student</label>
+                </div>
+            </div>
+            <input class="submit" type="submit" value="Sing Up">
+        </form>
+        <div>
+            <a href="">Do you have an account?</a>
+        </div>
+    </div>
+</section>
+@endsection
+
+@section('js')
+<script src="{{asset('JS/main.js')}}"></script>
+@endsection
+
+{{--
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
         @csrf
@@ -50,3 +95,4 @@
         </div>
     </form>
 </x-guest-layout>
+--}}

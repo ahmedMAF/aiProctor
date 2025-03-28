@@ -1,3 +1,40 @@
+@extends('layouts.main')
+
+@section('title' , 'Login')
+
+@section('style')
+<link rel="stylesheet" href="{{asset('css/login-signup.css')}}">
+@endsection
+
+@section('section')
+<section>
+    <div class="content">
+        <form action="" method="">
+            <h2>Login</h2>
+            <div class="input"><input type="email" required placeholder="Email"></div>
+            <div class="input"><input type="password" required placeholder="Password"></div>
+            <div class="r-a-f">
+                <div>
+                    <input type="checkbox" id="Remember">
+                    <label for="Remember">Remember me</label>
+                </div>
+                <div>
+                    <a href="">Forgot Password?</a>
+                </div>
+            </div>
+            <input class="submit" type="submit" value="Login">
+        </form>
+        <div>
+            <a href="">Do you not have an account?</a>
+        </div>
+    </div>
+</section>
+@endsection
+
+@section('js')
+<script src="{{asset('JS/main.js')}}"></script>
+@endsection
+{{--
 <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -45,3 +82,4 @@
         </div>
     </form>
 </x-guest-layout>
+--}}

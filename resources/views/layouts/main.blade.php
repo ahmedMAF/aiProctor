@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>@yield('title')</title>
+    <link rel="stylesheet" href="{{asset('css/main.css')}}">
+    @yield('style')
+</head>
+ <body>
+    <!--start nav bar-->
+    <nav>
+        <div class="continer">
+            <a href="">Logo</a>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="">About</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Signup</a></li>
+                <li><a href="">New exam</a></li>
+                <li><a href="">Exams</a></li>
+                <li><a href="">Profile</a></li>
+                <li><a href="">Log out</a></li>
+            </ul>
+            <div class="open-men button" id="open-men">
+                <span class="icon i"></span>
+                <span class="icon i"></span>
+                <span class="icon"></span>
+            </div>
+        </div>
+    </nav>
+    <!--end nav bar-->
+    <!--start section-->
+    @yield('section')
+    <!--end section-->
+    @yield('js')
+</body>
+</html>

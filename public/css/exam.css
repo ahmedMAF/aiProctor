@@ -1,0 +1,54 @@
+section{
+    margin-top: 100px;
+    color: white;
+}
+section .page .qes , section .page .left-qes{
+    background-color: var(--color-bg1, #2e3267);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+section .page{
+    display: flex;
+}
+section .page .left-qes{
+    margin-right: 30px;
+    max-width: 200px;
+    height: fit-content;
+}
+section .page .left-qes p{
+    text-align: center;
+    margin: 5px 0px 20px 0px;
+    background-color: var(--color-bg2);
+    padding: 8px;
+    border-radius: 5px;
+}
+section .page .left-qes .boxes .box{
+    display: inline-block;
+    background-color: var(--color-bg2);
+    padding: 5px 7px;
+    margin-bottom: 5px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+section .page .qes{
+    width: 100%;
+}
+section .page .qes div{
+    margin-bottom: 15px;
+}
+section .page .grade{
+    margin-top: -7px;
+    font-size: 12px;
+}
+section .page .qes button{
+    padding: 10px;
+    border-radius: 5px;
+    background-color: var(--color-bg2);
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
