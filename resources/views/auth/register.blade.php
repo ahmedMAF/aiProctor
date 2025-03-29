@@ -9,15 +9,16 @@
 @section('section')
 <section>
     <div class="content">
-        <form action="" method="">
+        <form action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
+            @csrf
             <h2>Create Account</h2>
-            <div class="input"><input type="text" required placeholder="Name"></div>
-            <div class="input"><input type="email" required placeholder="Email"></div>
-            <div class="input"><input type="password" required placeholder="Password"></div>
-            <div class="input"><input type="password" required placeholder="Confirm Password"></div>
+            <div class="input"><input id="name" type="text" required placeholder="Name" name="name"></div>
+            <div class="input"><input id="email" type="email" required placeholder="Email" name="email"></div>
+            <div class="input"><input id="password" type="password" required placeholder="Password" name="password"></div>
+            <div class="input"><input id="password_confirmation" type="password" required placeholder="Confirm Password" name="password_confirmation"></div>
             <div class="profile">
                 <div class="label"><label for="profile">Upload Profile Image</label></div>
-                <div class="input"><input id="profile" required type="file"></div>
+                <div class="input"><input id="profile" required type="file" name="profile"></div>
             </div>
             <div class="T-A-S">
                 <div>
@@ -25,14 +26,14 @@
                     <label for="techer">Techer</label>
                 </div>
                 <div>
-                    <input id="student" type="radio" value="2" required name="type">
+                    <input id="student" type="radio" value="0" required name="type">
                     <label for="student">Student</label>
                 </div>
             </div>
             <input class="submit" type="submit" value="Sing Up">
         </form>
         <div>
-            <a href="">Do you have an account?</a>
+            <a href="/login">Do you have an account?</a>
         </div>
     </div>
 </section>

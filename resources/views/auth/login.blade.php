@@ -9,10 +9,11 @@
 @section('section')
 <section>
     <div class="content">
-        <form action="" method="">
+        <form action="{{ route('login') }}" method="POST">
+            @csrf
             <h2>Login</h2>
-            <div class="input"><input type="email" required placeholder="Email"></div>
-            <div class="input"><input type="password" required placeholder="Password"></div>
+            <div class="input"><input type="email" required placeholder="Email" name="email"></div>
+            <div class="input"><input type="password" required placeholder="Password" name="password"></div>
             <div class="r-a-f">
                 <div>
                     <input type="checkbox" id="Remember">
@@ -25,7 +26,7 @@
             <input class="submit" type="submit" value="Login">
         </form>
         <div>
-            <a href="">Do you not have an account?</a>
+            <a href="/register">Do you not have an account?</a>
         </div>
     </div>
 </section>
