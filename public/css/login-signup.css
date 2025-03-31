@@ -68,4 +68,12 @@ section .content .profile{
 section .content .profile .label{
     margin-bottom: 10px;
 }
+.errors{
+    color: #E74C3C;
+}
+.errors ul{
+    list-style: none;
+    padding: 0px;
+    text-align: center;
+}
 /*end section*/

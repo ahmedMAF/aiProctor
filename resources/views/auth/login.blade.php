@@ -12,12 +12,16 @@
         <form action="{{ route('login') }}" method="POST">
             @csrf
             <h2>Login</h2>
-            <div class="input"><input type="email" required placeholder="Email" name="email"></div>
-            <div class="input"><input type="password" required placeholder="Password" name="password"></div>
+            <div class="input"><input type="email" required placeholder="Email" name="email" value="{{ old('email') }}"></div>
+            <div class="input"><input type="password" required placeholder="Password" name="password" value="{{ old('password') }}"></div>
+            <div class="errors">
+                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            </div>
             <div class="r-a-f">
                 <div>
-                    <input type="checkbox" id="Remember">
-                    <label for="Remember">Remember me</label>
+                    <input type="checkbox" id="remember_me" name="remember">
+                    <label for="remember_me">Remember me</label>
                 </div>
                 <div>
                     <a href="">Forgot Password?</a>

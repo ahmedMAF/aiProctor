@@ -15,12 +15,24 @@
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="">About</a></li>
+                @guest
                 <li><a href="/login">Login</a></li>
                 <li><a href="/register">Signup</a></li>
+                @else
+                @if (Auth::user()->account_type)
                 <li><a href="">New exam</a></li>
                 <li><a href="">Exams</a></li>
+                @else
+                <li><a href="">Exams</a></li>
+                @endif
                 <li><a href="">Profile</a></li>
-                <li><a href="">Log out</a></li>
+                <li>
+                    <form action="/logout" method="POST">
+                        @csrf
+                        <button type="submit">Log out</button>
+                    </form>
+                </li>
+                @endguest
             </ul>
             <div class="open-men button" id="open-men">
                 <span class="icon i"></span>

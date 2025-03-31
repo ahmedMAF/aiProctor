@@ -12,23 +12,31 @@
         <form action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <h2>Create Account</h2>
-            <div class="input"><input id="name" type="text" required placeholder="Name" name="name"></div>
-            <div class="input"><input id="email" type="email" required placeholder="Email" name="email"></div>
-            <div class="input"><input id="password" type="password" required placeholder="Password" name="password"></div>
-            <div class="input"><input id="password_confirmation" type="password" required placeholder="Confirm Password" name="password_confirmation"></div>
+            <div class="input"><input id="name" type="text" required placeholder="Name" name="name" value="{{ old('name') }}"></div>
+            <div class="input"><input id="email" type="email" required placeholder="Email" name="email" value="{{ old('email') }}"></div>
+            <div class="input"><input id="password" type="password" required placeholder="Password" name="password" value="{{ old('password') }}"></div>
+            <div class="input"><input id="password_confirmation" type="password" required placeholder="Confirm Password" name="password_confirmation" value="{{ old('password_confirmation') }}"></div>
             <div class="profile">
                 <div class="label"><label for="profile">Upload Profile Image</label></div>
-                <div class="input"><input id="profile" required type="file" name="profile"></div>
+                <div class="input"><input id="profile" required type="file" name="profile" value="{{ old('profile') }}"></div>
             </div>
             <div class="T-A-S">
                 <div>
-                    <input id="techer" type="radio" value="1" required name="type">
+                    <input id="techer" type="radio" value="1" required name="type" {{ old('type') == 1 ? 'checked' : '' }}>
                     <label for="techer">Techer</label>
                 </div>
                 <div>
-                    <input id="student" type="radio" value="0" required name="type">
+                    <input id="student" type="radio" value="0" required name="type" {{ old('type') == 0 ? 'checked' : '' }}>
                     <label for="student">Student</label>
                 </div>
+            </div>
+            <div class="errors">
+                <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                <x-input-error :messages="$errors->get('profile')" class="mt-2" />
+                <x-input-error :messages="$errors->get('type')" class="mt-2" />
             </div>
             <input class="submit" type="submit" value="Sing Up">
         </form>
