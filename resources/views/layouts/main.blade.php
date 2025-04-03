@@ -20,12 +20,12 @@
                 <li><a href="/register">Signup</a></li>
                 @else
                 @if (Auth::user()->account_type)
-                <li><a href="">New exam</a></li>
+                <li><a href="/teacher/add">New exam</a></li>
                 <li><a href="">Exams</a></li>
                 @else
                 <li><a href="">Exams</a></li>
                 @endif
-                <li><a href="">Profile</a></li>
+                <li><a href="/profile">Profile</a></li>
                 <li>
                     <form action="/logout" method="POST">
                         @csrf
@@ -45,6 +45,7 @@
     <!--start section-->
     @yield('section')
     <!--end section-->
+    <script src="{{asset('JS/main.js')}}"></script>
     @yield('js')
 </body>
 </html>

@@ -67,6 +67,8 @@ section .btn{
     color: white;
     margin: 0px auto 25px auto;
     cursor: pointer;
+    width: fit-content;
+    text-decoration: none;
 }
 section .password{
     text-align: center;

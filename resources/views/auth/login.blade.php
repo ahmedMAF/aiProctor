@@ -35,10 +35,6 @@
     </div>
 </section>
 @endsection
-
-@section('js')
-<script src="{{asset('JS/main.js')}}"></script>
-@endsection
 {{--
 <x-guest-layout>
     <!-- Session Status -->
