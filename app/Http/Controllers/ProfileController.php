@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Exam;
+
 
 class ProfileController extends Controller
 {
@@ -16,8 +18,12 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $user = $request->user();
+        $exams = Exam::where("user_id" , $user->id)->get();
+
         return view('profile', [
-            'user' => $request->user(),
+            'user' => $user,
+            'exams' => $exams,
         ]);
     }
 

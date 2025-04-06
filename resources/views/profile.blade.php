@@ -38,79 +38,43 @@
 {{--for reacher--}}
         <div class="exams">
             <h2>Exams created</h2>
+            @if ($exams->isEmpty())
+            <h2 style="text-align: center">No exams created yet</h2>
+            @else
             <div class="group">
-                <div class="exam">
-                    <p>Exam Name: <span>Math</span></p>
-                    <p class="des">Description: <span>this is a final exam, For math course, Good luck</span></p>
-                    <p>Navigation Style: <span>Sequential</span></p>
-                    <p>Shuffling Questions: <span>Yes</span></p>
-                    <p>Open Time: <span>13/9/2020</span></p>
-                    <p>Close Time: <span>13/9/2020</span></p>
-                    <p>Duration: <span>20m</span></p>
-                    <p>Full Mark: <span>100</span></p>
-                    <p>Pass Mark: <span>60</span></p>
-                    <p>Exam link: <span>https://www.google.com/exam</span></p>
-                    <div class="button">
-                        <button class="btn">Browse</button>
-                        <button class="btn">Students</button>
-                        <button class="btn">Delete</button>
-                        <button class="btn">Update</button>
+                    @foreach ($exams as $exam)
+                    <div class="exam">
+                        <p>Exam Name: <span>{{$exam->name}}</span></p>
+                        <p class="des">Description: <span>{{$exam->description}}</span></p>
+                        <p>Navigation Style: <span>
+                            @if ($exam->is_sequential == 1)
+                            Sequential
+                            @else
+                            Free
+                            @endif
+                            </span></p>
+                        <p>Shuffling Questions: <span>
+                            @if ($exam->do_mix == 1)
+                            Yes
+                            @else
+                            No
+                            @endif
+                            </span></p>
+                        <p>Open Time: <span>{{$exam->open_time}}</span></p>
+                        <p>Close Time: <span>{{$exam->close_time}}</span></p>
+                        <p>Duration: <span>{{$exam->duration}}m</span></p>
+                        <p>Full Mark: <span>{{$exam->full_mark}}</span></p>
+                        <p>Pass Mark: <span>{{$exam->pass_mark}}</span></p>
+                        <p>Exam link: <span>/student/examlink/{{$exam->id}}</span></p>
+                        <div class="button">
+                            <a href="/teacher/addQ/{{$exam->id}}" class="btn">Questions</a>
+                            <a class="btn">Students</a>
+                            <a class="btn">Delete</a>
+                            <a class="btn">Update</a>
+                        </div>
                     </div>
-                </div>
-                <div class="exam">
-                    <p>Exam Name: <span>Math</span></p>
-                    <p class="des">Description: <span>this is a final exam, For math course, Good luck</span></p>
-                    <p>Navigation Style: <span>Free</span></p>
-                    <p>Shuffling Questions: <span>No</span></p>
-                    <p>Open Time: <span>13/9/2020</span></p>
-                    <p>Close Time: <span>13/9/2020</span></p>
-                    <p>Duration: <span>20m</span></p>
-                    <p>Full Mark: <span>100</span></p>
-                    <p>Pass Mark: <span>60</span></p>
-                    <p>Exam link: <span>https://www.google.com/exam</span></p>
-                    <div class="button">
-                        <button class="btn">Browse</button>
-                        <button class="btn">Students</button>
-                        <button class="btn">Delete</button>
-                        <button class="btn">Update</button>
-                    </div>
-                </div>
-                <div class="exam">
-                    <p>Exam Name: <span>Math</span></p>
-                    <p class="des">Description: <span>this is a final exam, For math course, Good luck</span></p>
-                    <p>Navigation Style: <span>Sequential</span></p>
-                    <p>Shuffling Questions: <span>Yes</span></p>
-                    <p>Open Time: <span>13/9/2020</span></p>
-                    <p>Close Time: <span>13/9/2020</span></p>
-                    <p>Duration: <span>20m</span></p>
-                    <p>Full Mark: <span>100</span></p>
-                    <p>Pass Mark: <span>60</span></p>
-                    <p>Exam link: <span>https://www.google.com/exam</span></p>
-                    <div class="button">
-                        <button class="btn">Browse</button>
-                        <button class="btn">Students</button>
-                        <button class="btn">Delete</button>
-                        <button class="btn">Update</button>
-                    </div>
-                </div>
-                <div class="exam">
-                    <p>Exam Name: <span>Math</span></p>
-                    <p class="des">Description: <span>this is a final exam, For math course, Good luck</span></p>
-                    <p>Navigation Style: <span>Sequential</span></p>
-                    <p>Shuffling Questions: <span>Yes</span></p>
-                    <p>Open Time: <span>13/9/2020</span></p>
-                    <p>Close Time: <span>13/9/2020</span></p>
-                    <p>Duration: <span>20m</span></p>
-                    <p>Full Mark: <span>100</span></p>
-                    <p>Pass Mark: <span>60</span></p>
-                    <p>Exam link: <span>https://www.google.com/exam</span></p>
-                    <div class="button">
-                        <button class="btn">Browse</button>
-                        <button class="btn">Students</button>
-                        <button class="btn">Delete</button>
-                        <button class="btn">Update</button>
-                    </div>
-                </div>
+                    @endforeach
+            @endif
             </div>
         </div>
         <div class="exams">

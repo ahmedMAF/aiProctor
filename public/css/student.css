@@ -65,10 +65,10 @@ section .btn{
     border: none;
     background-color: var(--color-bg2);
     color: white;
-    margin: 0px auto 25px auto;
     cursor: pointer;
     width: fit-content;
     text-decoration: none;
+    margin: auto;
 }
 section .password{
     text-align: center;
@@ -135,6 +135,8 @@ section .exams .group .exam .button{
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    gap: 10px;
+    font-size: 14px;
 }
 section .exams .group .exam .button button{
     margin-bottom: 10px;
