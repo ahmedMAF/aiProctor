@@ -22,9 +22,10 @@ captureButton.addEventListener('click', () => {
         });
 
 
-next.onclick = function(){
+next.onclick = function(e){
         counter ++;
         if(counter == 1){
+                e.preventDefault();
                 capturedFace = canvas.toDataURL('image/png');
                 canvasBlock.style.display = "none";
                 p.innerHTML = "Take a clear picture of your identity";

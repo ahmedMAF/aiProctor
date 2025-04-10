@@ -7,7 +7,7 @@ section .page .video p{
     margin-bottom: 0px;
     margin-top: 0px;
 }
-section .page button{
+section .page button , section .page a{
     display: block;
     padding: 10px 20px;
     border-radius: 5px;
@@ -16,6 +16,8 @@ section .page button{
     color: white;
     margin: 0px auto;
     cursor: pointer;
+    width: fit-content;
+    text-decoration: none;
 }
 section .page .video , section .page .canvas{
     max-width: 435px;

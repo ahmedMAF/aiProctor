@@ -17,7 +17,7 @@
             </div>
             <div class="canvas" id="canvasBlock">
                 <canvas id="canvas"></canvas>
-                <button class="next" id="next">Next</button>
+                <a href="/student/exam/{{$id}}" class="next" id="next">Next</a>
             </div>
         </div>
     </div>

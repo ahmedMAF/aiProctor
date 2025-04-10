@@ -29,5 +29,7 @@ Route::get('/teacher/addQ/{id}' , [AddQController::class , 'questions']);
 Route::post('/teacher/addQ/{id}' , [AddQController::class , 'add']);
 
 Route::get('/student/examlink/{id}' , [ExamController::class , 'verification']);
+Route::get('/student/exam/{id}' , [ExamController::class , 'takeExam']);
+Route::get('/exam/next-question/{id}' , [ExamController::class , 'nextQuestion']);
 
 require __DIR__.'/auth.php';
