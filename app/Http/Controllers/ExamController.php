@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\UserExam;
 use App\Models\Exam;
 use App\Models\Question;
+use App\Models\Answer;
 
 class ExamController extends Controller
 {
@@ -24,11 +25,24 @@ class ExamController extends Controller
             'exam_id' => $id,
         ]);
 
-        return view("exam" , ["duration" => $exam->duration , "count" => $questions->count() , "id" => $id]);
+        $index = $request->session()->get("index", 0);
+        $question = Question::where('exam_id', $id)->skip($index)->take(1)->first();
+        $request->session()->put("index", $index + 1);
+
+        return view("exam" , ["question" => $question , "duration" => $exam->duration , "count" => $questions->count() , "id" => $id]);
 
     }
 
     public function nextQuestion(Request $request , $id){
+
+        Answer::create([
+            'answer' => $request->input('answer'),
+            'user_id' => $request->user()->id,
+            'exam_id' => $id,
+            'question_id' => $request->input('questionId'),
+        ]);
+
+
         $index = $request->session()->get("index", 0);
         $question = Question::where('exam_id', $id)->skip($index)->take(1)->first();
 

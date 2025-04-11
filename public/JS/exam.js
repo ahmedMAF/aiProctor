@@ -5,6 +5,8 @@ let multipleChoose = document.getElementById('mc');
 let trueOrFalse = document.getElementById('tof');
 let opMultipleChoose = document.getElementsByClassName('op');
 let grade = document.getElementById('grade');
+let qId = document.getElementById('q-id');
+let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 let [minutes, seconds] = time.innerText.split(":").map(Number);
 let t = minutes * 60 + seconds;
@@ -20,9 +22,18 @@ setInterval(function(){
 
 function loadNextQuestion() {
     fetch(`/exam/next-question/${examId}`, {
-        method: 'GET',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': token
+        },
+        body: JSON.stringify({
+            answer: document.querySelector('input[name="answer"]:checked').value,
+            questionId : qId.value,
+        })
     })
     .then(response => {
+        document.querySelector('input[name="answer"]:checked').checked = false;
         if (response.status === 404) {
             questionText.innerText = "الامتحان انتهى. شكراً لتقديمك!";
            // document.getElementById('next-btn').disabled = true;
@@ -32,6 +43,7 @@ function loadNextQuestion() {
     })
     .then(data => {
         if (data) {
+            qId.value = data.id;
             questionText.innerText = data.text;
             grade.innerText = data.grade;
             console.log(data);
@@ -53,4 +65,4 @@ function loadNextQuestion() {
 
 next.onclick = loadNextQuestion;
 
-window.onload = loadNextQuestion();
+//window.onload = loadNextQuestion();
