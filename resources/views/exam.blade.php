@@ -24,7 +24,7 @@
             </div>
             <div class="qes">
                 <p id="question-text">{{$question->text}}</p>
-                <p class="grade">Grade: <span id="grade">{{$question->grade}}</span> Mark</p>
+                <p id="mark" class="grade">Grade: <span id="grade">{{$question->grade}}</span> Mark</p>
                 <input id="q-id" type="text" hidden value="{{$question->id}}">
                 <div class="option">
                     <div style="{{ ($question->type == 1) ? 'display: block;' : 'display: none;' }}" class="mc" id="mc">
@@ -57,6 +57,10 @@
                     </div>
                 </div>
                 <button id="next"> Next Question</button>
+                <form action="/exam/finish/{{$id}}" method="POST">
+                    @csrf
+                    <button type="submit" style="display: none" id="finish">Finish</button>
+                </form>
             </div>
         </div>
     </div>

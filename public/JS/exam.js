@@ -35,8 +35,12 @@ function loadNextQuestion() {
     .then(response => {
         document.querySelector('input[name="answer"]:checked').checked = false;
         if (response.status === 404) {
-            questionText.innerText = "الامتحان انتهى. شكراً لتقديمك!";
-           // document.getElementById('next-btn').disabled = true;
+            multipleChoose.style.display = 'none';
+            trueOrFalse.style.display = 'none';
+            questionText.innerText = "Good luck, you have completed the exam";
+            next.style.display = "none";
+            document.getElementById("finish").style.display = "block";
+            document.getElementById("mark").style.display = "none";
             return;
         }
         return response.json();

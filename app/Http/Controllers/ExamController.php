@@ -54,4 +54,11 @@ class ExamController extends Controller
         $request->session()->put("index", $index + 1);
         return response()->json($question);
     }
+
+    public function finish(Request $request , $id){
+        $user = $request->user()->id;
+        UserExam::where('user_id', $user)->where('exam_id', $id)->update(['end_time' => now()]);
+        
+        return redirect('/');
+    }
 }
