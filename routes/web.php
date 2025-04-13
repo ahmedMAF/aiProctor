@@ -32,5 +32,6 @@ Route::get('/student/examlink/{id}' , [ExamController::class , 'verification']);
 Route::get('/student/exam/{id}' , [ExamController::class , 'takeExam']);
 Route::POST('/exam/next-question/{id}' , [ExamController::class , 'nextQuestion']);
 Route::POST('/exam/finish/{id}' , [ExamController::class , 'finish']);
+Route::get('/exam/next-question/refresh/{id}' , [ExamController::class , 'refresh']);
 
 require __DIR__.'/auth.php';

@@ -69,4 +69,6 @@ function loadNextQuestion() {
 
 next.onclick = loadNextQuestion;
 
+window.history.replaceState({} , '' , `/exam/next-question/refresh/${examId}`);
+
 //window.onload = loadNextQuestion();

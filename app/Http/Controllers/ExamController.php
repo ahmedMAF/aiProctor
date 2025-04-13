@@ -33,6 +33,8 @@ class ExamController extends Controller
 
     }
 
+    public function refresh(Request $request , $id){}
+
     public function nextQuestion(Request $request , $id){
 
         Answer::create([
@@ -57,7 +59,20 @@ class ExamController extends Controller
 
     public function finish(Request $request , $id){
         $user = $request->user()->id;
-        UserExam::where('user_id', $user)->where('exam_id', $id)->update(['end_time' => now()]);
+        $mark = 0;
+        $i = 0;
+
+        $answers = Answer::where('user_id', $user)->where('exam_id', $id)->pluck('answer');
+        $correctAnswers = Question::where('exam_id', $id)->select('grade' , 'correct_answer')->get();
+
+        foreach($answers as $answer){
+            if($answer == ($correctAnswers[$i]->correct_answer - 1)){
+                $mark += $correctAnswers[$i]->grade;
+            }
+            $i++;
+        }
+
+        UserExam::where('user_id', $user)->where('exam_id', $id)->update(['end_time' => now() , 'mark' => $mark]);
         
         return redirect('/');
     }
