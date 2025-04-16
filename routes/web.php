@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AddExamController;
 use App\Http\Controllers\AddQController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -33,5 +34,7 @@ Route::get('/student/exam/{id}' , [ExamController::class , 'takeExam']);
 Route::POST('/exam/next-question/{id}' , [ExamController::class , 'nextQuestion']);
 Route::POST('/exam/finish/{id}' , [ExamController::class , 'finish']);
 Route::get('/exam/next-question/refresh/{id}' , [ExamController::class , 'refresh']);
+
+Route::get('/student/review/{id}' , [StudentController::class , 'review']);
 
 require __DIR__.'/auth.php';

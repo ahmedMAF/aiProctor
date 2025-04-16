@@ -15,7 +15,7 @@
     <div class="continer">
         <div class="page">
             <div class="left-qes">
-                <p id="time" class="timer">{{$duration}}:00</p>
+                <p id="time" class="timer">{{$m}}:{{$s}}</p>
                 <div class="boxes">
                     @for ($i = 0 ; $i < $count ; $i++)
                     <span class="box">{{$i+1}}</span>

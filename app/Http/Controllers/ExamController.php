@@ -7,6 +7,8 @@ use App\Models\UserExam;
 use App\Models\Exam;
 use App\Models\Question;
 use App\Models\Answer;
+use Carbon\Carbon;
+ 
 
 class ExamController extends Controller
 {
@@ -29,11 +31,27 @@ class ExamController extends Controller
         $question = Question::where('exam_id', $id)->skip($index)->take(1)->first();
         $request->session()->put("index", $index + 1);
 
-        return view("exam" , ["question" => $question , "duration" => $exam->duration , "count" => $questions->count() , "id" => $id]);
+        return view("exam" , ["question" => $question , "m" => $exam->duration , "s" => 0 , "count" => $questions->count() , "id" => $id]);
 
     }
 
-    public function refresh(Request $request , $id){}
+    public function refresh(Request $request , $id){
+        $user = $request->user()->id;
+        $index = $request->session()->get("index", 0);
+        $index -= 1;
+        $question = Question::where('exam_id', $id)->skip($index)->take(1)->first();
+        $questions = Question::where("exam_id" , $id)->get();
+        $exam = Exam::where("id" , $id)->first();
+        $startTime = UserExam::where('user_id', $user)->where('exam_id', $id)->value('start_time');
+       
+        $duration = $exam->duration * 60;
+        $startTime = Carbon::parse($startTime);
+        $elapsed = $startTime->diffInSeconds(Carbon::now());
+        $duration = max($duration - $elapsed, 0);
+
+        return view("exam" , ["question" => $question , "m" => floor($duration / 60) , "s" => ($duration % 60)  , "count" => $questions->count() , "id" => $id]);
+
+    }
 
     public function nextQuestion(Request $request , $id){
 

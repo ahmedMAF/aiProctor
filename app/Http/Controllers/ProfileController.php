@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\Exam;
+use App\Models\UserExam;
 
 
 class ProfileController extends Controller
@@ -19,8 +20,12 @@ class ProfileController extends Controller
     public function edit(Request $request): View
     {
         $user = $request->user();
-        $exams = Exam::where("user_id" , $user->id)->get();
-
+        if($user->account_type){
+            $exams = Exam::where("user_id" , $user->id)->get();
+        }
+        else{
+            $exams = UserExam::with('exam')->where("user_id" , $user->id)->get();
+        }
         return view('profile', [
             'user' => $user,
             'exams' => $exams,

@@ -85,38 +85,16 @@
         <div class="exams">
             <h2>Exams completed</h2>
             <div class="group">
+                @foreach ($exams as $exam)
                 <div class="exam">
-                    <p>Exam Name: <span>Math</span></p>
-                    <p>Start Time: <span>10/9/2020</span></p>
-                    <p>End Time: <span>13/9/2020</span></p>
-                    <p>Duration: <span>20m</span></p>
-                    <p>Mark: <span>60 from 100</span></p>
-                    <button class="btn">Review</button>
+                    <p>Exam Name: <span>{{$exam->exam->name}}</span></p>
+                    <p>Start Time: <span>{{$exam->start_time}}</span></p>
+                    <p>End Time: <span>{{$exam->end_time}}</span></p>
+                    <p>Duration: <span>{{$exam->start_time->diffInMinutes($exam->end_time)}}m</span></p>
+                    <p>Mark: <span>{{$exam->mark}}</span></p>
+                    <a href="/student/review/{{$exam->exam->id}}" class="btn">Review</a>
                 </div>
-                <div class="exam">
-                    <p>Exam Name: <span>Math</span></p>
-                    <p>Start Time: <span>10/9/2020</span></p>
-                    <p>End Time: <span>13/9/2020</span></p>
-                    <p>Duration: <span>20m</span></p>
-                    <p>Mark: <span>60 from 100</span></p>
-                    <button class="btn">Review</button>
-                </div>
-                <div class="exam">
-                    <p>Exam Name: <span>Math</span></p>
-                    <p>Start Time: <span>10/9/2020</span></p>
-                    <p>End Time: <span>13/9/2020</span></p>
-                    <p>Duration <span>20m</span></p>
-                    <p>Mark: <span>60 from 100</span></p>
-                    <button class="btn">Review</button>
-                </div>
-                <div class="exam">
-                    <p>Exam Name: <span>Math</span></p>
-                    <p>Start Time: <span>10/9/2020</span></p>
-                    <p>End Time: <span>13/9/2020</span></p>
-                    <p>Duration: <span>20m</span></p>
-                    <p>Mark: <span>60 from 100</span></p>
-                    <button class="btn">Review</button>
-                </div>
+                @endforeach
             </div>
         </div>
 @endif
