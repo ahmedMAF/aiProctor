@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Exam;
+use App\Models\UserExam;
 
 class AddExamController extends Controller
 {
@@ -44,5 +45,11 @@ class AddExamController extends Controller
         ]);
 
         return redirect('/profile');
+    }
+
+    public function students($id){
+        $students = UserExam::with("user")->where('exam_id', $id)->get();
+        $fullMark = Exam::find($id)->full_mark;
+        return view("students" , ["students" => $students , "fullMark" => $fullMark]);
     }
 }

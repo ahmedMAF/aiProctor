@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/teacher/add' , [AddExamController::class , 'add']);
 Route::post('/teacher/add' , [AddExamController::class , 'addExam']);
+Route::get('/teacher/students/{id}' , [AddExamController::class , 'students']);
 
 Route::get('/teacher/addQ/{id}' , [AddQController::class , 'questions']);
 Route::post('/teacher/addQ/{id}' , [AddQController::class , 'add']);

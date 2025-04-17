@@ -68,7 +68,7 @@
                         <p>Exam link: <span>/student/examlink/{{$exam->id}}</span></p>
                         <div class="button">
                             <a href="/teacher/addQ/{{$exam->id}}" class="btn">Questions</a>
-                            <a class="btn">Students</a>
+                            <a href="/teacher/students/{{$exam->id}}" class="btn">Students</a>
                             <a class="btn">Delete</a>
                             <a class="btn">Update</a>
                         </div>

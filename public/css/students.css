@@ -22,7 +22,7 @@ table, th, td {
 th, td {
     padding: 10px;
 }
-button{
+tr td a{
     display: block;
     padding: 10px 20px;
     border-radius: 5px;
@@ -31,4 +31,6 @@ button{
     color: white;
     margin: 0px auto;
     cursor: pointer;
+    width: fit-content;
+    text-decoration: none;
 }
