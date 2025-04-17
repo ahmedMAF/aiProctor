@@ -50,6 +50,11 @@ class AddExamController extends Controller
     public function students($id){
         $students = UserExam::with("user")->where('exam_id', $id)->get();
         $fullMark = Exam::find($id)->full_mark;
-        return view("students" , ["students" => $students , "fullMark" => $fullMark]);
+        return view("students" , ["students" => $students , "fullMark" => $fullMark , "examId" => $id]);
+    }
+
+    public function report($studentId , $examId){
+        $student = UserExam::with('user')->where('exam_id', $examId)->where('user_id' , $studentId)->first();
+        return view("report" , ["student" => $student]);
     }
 }
