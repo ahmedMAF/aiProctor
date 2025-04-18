@@ -70,7 +70,7 @@
                             <a href="/teacher/addQ/{{$exam->id}}" class="btn">Questions</a>
                             <a href="/teacher/students/{{$exam->id}}" class="btn">Students</a>
                             <a class="btn">Delete</a>
-                            <a class="btn">Update</a>
+                            <a href="/teacher/update/{{$exam->id}}" class="btn">Update</a>
                         </div>
                     </div>
                     @endforeach

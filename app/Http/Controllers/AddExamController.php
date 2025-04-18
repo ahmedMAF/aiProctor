@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Exam;
 use App\Models\UserExam;
+use App\Models\Question;
 
 class AddExamController extends Controller
 {
@@ -56,5 +57,11 @@ class AddExamController extends Controller
     public function report($studentId , $examId){
         $student = UserExam::with('user')->where('exam_id', $examId)->where('user_id' , $studentId)->first();
         return view("report" , ["student" => $student]);
+    }
+
+    public function updateExam($examId){
+        $exam = Exam::find($examId);
+        $questions = Question::where("exam_id" , $examId)->get();
+        return view("update" , ["exam" => $exam , "questions" => $questions]);
     }
 }
