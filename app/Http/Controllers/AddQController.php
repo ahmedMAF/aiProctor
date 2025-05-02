@@ -27,13 +27,13 @@ class AddQController extends Controller
                 'answers.*' => 'required',
                 'correct' => 'required|numeric',
             ]);
-
+            //dd(json_encode($validated['answers']));
             Question::create([
                 'text' => $validated['text'],
                 'type' => $validated['type'],
                 'grade' => $validated['grade'],
                 'correct_answer' => $validated['correct'],
-                'answers' => json_encode($validated['answers']),
+                'answers' => $validated['answers'],
                 'exam_id' => $id,
             ]);
         }
@@ -44,18 +44,23 @@ class AddQController extends Controller
                 'type' => 'required|numeric',
                 'tof' =>'required',
             ]);
-
+ 
             Question::create([
                 'text' => $validated['text'],
                 'type' => $validated['type'],
                 'grade' => $validated['grade'],
                 'correct_answer' => $validated['tof'],
-                'answers' => json_encode(['true', 'false']),
+                'answers' => ['true', 'false'],
                 'exam_id' => $id,
             ]);
         }
 
-        return redirect('/teacher/addQ/'. $id);
+        if($request->test){
+            return redirect('/teacher/update/'. $id);
+        }
+        else{
+            return redirect('/teacher/addQ/'. $id);
+        }
 
     }
 }

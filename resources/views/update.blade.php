@@ -110,11 +110,12 @@
             <div>
                 <button class="add" id="add">Add a Question</button>
                 <div class="contant" id="contant">
-                    <form action="" method="POST">
+                    <form method="POST" action="/teacher/addQ/{{$exam->id}}">
                         @csrf
-                        <textarea placeholder="Write the question"></textarea>
-                        <input type="number" placeholder="Grade">
-                        <select name="" id="select-type">
+                        <input type="text" name="test" hidden value="1">
+                        <textarea name="text" placeholder="Write the question"></textarea>
+                        <input name="grade" type="number" placeholder="Grade">
+                        <select name="type" id="select-type">
                             <option value="" selected>Question type</option>
                             <option value="1">Multiple choice</option>
                             <option value="2">True or False</option>
@@ -122,40 +123,40 @@
                         <div class="t-O-Q">
                             <div class="t-o-f" id="t-o-f">
                                 <div class="true">
-                                    <input type="radio" id="t" name="5">
+                                    <input type="radio" id="t" value="1" name="tof">
                                     <label for="t">True</label>
                                 </div>
                                 <div class="true">
-                                    <input type="radio" id="f" name="5">
+                                    <input type="radio" id="f" value="2" name="tof">
                                     <label for="f">False</label>
                                 </div>
                             </div>
                             <div class="m-c" id="m-c">
                                 <div class="choice">
-                                    <input type="text" placeholder="First choice">
+                                    <input type="text" name="answers[]" placeholder="First choice">
                                     <div class="choice">
-                                        <input type="checkbox" id="f-choice">
+                                        <input type="radio" name="correct" value="1" id="f-choice">
                                         <label for="f-choice">This is the correct answer</label>
                                     </div>
                                 </div>
                                 <div class="choice">
-                                    <input type="text" placeholder="second choice">
+                                    <input type="text" name="answers[]" placeholder="second choice">
                                     <div class="choice">
-                                        <input type="checkbox" id="s-choice">
+                                        <input type="radio" name="correct" value="2" id="s-choice">
                                         <label for="s-choice">This is the correct answer</label>
                                     </div>
                                 </div>
                                 <div class="choice">
-                                    <input type="text" placeholder="Thierd choice">
+                                    <input type="text" name="answers[]" placeholder="Thierd choice">
                                     <div class="choice">
-                                        <input type="checkbox" id="t-choice">
+                                        <input type="radio" name="correct" value="3" id="t-choice">
                                         <label for="t-choice">This is the correct answer</label>
                                     </div>
                                 </div>
                                 <div class="choice">
-                                    <input type="text" placeholder="Fourth choice">
+                                    <input type="text" name="answers[]" placeholder="Fourth choice">
                                     <div class="choice">
-                                        <input type="checkbox" id="fo-choice">
+                                        <input type="radio" name="correct" value="4" id="fo-choice">
                                         <label for="fo-choice">This is the correct answer</label>
                                     </div>
                                 </div>
