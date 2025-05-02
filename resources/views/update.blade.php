@@ -10,49 +10,51 @@
 <section>
     <div class="continer">
         <div class="info">
-            <form action="">
+            <form action="/teacher/update/{{$exam->id}}" method="POST">
+                @csrf
+                @method('PUT')
                 <div>
                     <label>Exam Name</label>
-                    <input type="text" value="{{$exam->name}}">
+                    <input type="text" value="{{$exam->name}}" name="name">
                 </div>
                 <div>
                     <label>Description</label>
-                    <textarea name="">{{$exam->description}}</textarea>
+                    <textarea name="description">{{$exam->description}}</textarea>
                 </div>
                 <div class="Navigation">
                     <h3>Navigation Style</h3>
                     <div class="nav">
-                        <input {{$exam->is_sequential == 1 ? "checked" : ""}} type="radio" id="se" name="1">
+                        <input value="1" {{$exam->is_sequential == 1 ? "checked" : ""}} type="radio" id="se" name="nav">
                         <label for="se">Sequential</label>
                     </div>
                     <div class="nav">
-                        <input {{$exam->is_sequential == 0 ? "checked" : ""}} type="radio" id="fr" name="1">
+                        <input value="0" {{$exam->is_sequential == 0 ? "checked" : ""}} type="radio" id="fr" name="nav">
                         <label for="fr">Free</label>
                     </div>
                 </div>
                 <div class="nav">
-                    <input {{$exam->do_mix == 1 ? "checked" : ""}} type="checkbox" id="sh">
+                    <input value="1" {{$exam->do_mix == 1 ? "checked" : ""}} type="checkbox" id="sh" name="Shuffling">
                     <label for="sh">Shuffling Questions</label>
                 </div>
                 <div>
                     <label for="op">Open Time</label>
-                    <input type="datetime-local" id="op" value="{{$exam->open_time}}">
+                    <input type="datetime-local" id="op" value="{{$exam->open_time}}" name="open-time">
                 </div>
                 <div>
                     <label for="cl">Close Time</label>
-                    <input type="datetime-local" id="cl" value="{{$exam->close_time}}">
+                    <input type="datetime-local" id="cl" value="{{$exam->close_time}}" name="close-time">
                 </div>
                 <div>
                     <label>Duration in minutes</label>
-                    <input type="number" value="{{$exam->duration}}">
+                    <input type="number" value="{{$exam->duration}}" name="duration">
                 </div>
                 <div>
                     <label>Full Mark</label>
-                    <input type="number" value="{{$exam->full_mark}}">
+                    <input type="number" value="{{$exam->full_mark}}" name="full-mark">
                 </div>
                 <div>
                     <label>Pass Mark</label>
-                    <input type="number" value="{{$exam->pass_mark}}">
+                    <input type="number" value="{{$exam->pass_mark}}" name="pass-mark">
                 </div>
                 <input class="create" type="submit" value="Save">
             </form>

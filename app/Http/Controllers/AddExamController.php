@@ -21,8 +21,8 @@ class AddExamController extends Controller
             'description' => 'required',
             'nav' => 'required',
             'Shuffling' =>'nullable',
-            'open-time' => 'required|date_format:Y-m-d\TH:i|after:now',
-            'close-time' => 'required|date_format:Y-m-d\TH:i|after:now',
+            'open-time' => 'required',
+            'close-time' => 'required',
             'duration' => 'required',
             'full-mark' => 'required|numeric',
             'pass-mark' => 'required|numeric',
@@ -63,5 +63,41 @@ class AddExamController extends Controller
         $exam = Exam::find($examId);
         $questions = Question::where("exam_id" , $examId)->get();
         return view("update" , ["exam" => $exam , "questions" => $questions]);
+    }
+
+    public function update(Request $request , $examId){
+        $exam = Exam::find($examId);
+        if($exam){
+            $validated = $request->validate([
+                'name' => 'required',
+                'description' => 'required',
+                'nav' => 'required',
+                'Shuffling' =>'nullable',
+                'open-time' => 'required',
+                'close-time' => 'required',
+                'duration' => 'required',
+                'full-mark' => 'required|numeric',
+                'pass-mark' => 'required|numeric',
+            ]);
+ 
+            if($request->Shuffling != 1){
+                $validated['Shuffling'] = 0;
+            }
+
+            $exam->name = $validated['name'];
+            $exam->description = $validated['description'];
+            $exam->open_time = $validated['open-time'];
+            $exam->close_time = $validated['close-time'];
+            $exam->duration = $validated['duration'];
+            $exam->full_mark = $validated['full-mark'];
+            $exam->pass_mark = $validated['pass-mark'];
+            $exam->is_sequential = $validated['nav'];
+            $exam->do_mix = $validated['Shuffling'];
+
+            $exam->save();
+
+        }
+
+        return redirect('/teacher/update/'.$examId);
     }
 }
