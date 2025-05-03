@@ -29,9 +29,11 @@ Route::get('/teacher/students/{id}' , [AddExamController::class , 'students']);
 Route::get('/teacher/students/report/{studentId}/{examId}' , [AddExamController::class , 'report']);
 Route::get('/teacher/update/{examId}' , [AddExamController::class , 'updateExam']);
 Route::put('/teacher/update/{examId}' , [AddExamController::class , 'update']);
+Route::delete('/teacher/delete/{examId}' , [AddExamController::class , 'delete']);
 
 Route::get('/teacher/addQ/{id}' , [AddQController::class , 'questions']);
 Route::post('/teacher/addQ/{id}' , [AddQController::class , 'add']);
+Route::delete('/teacher/deleteQ/{id}/{examId}' , [AddQController::class , 'delete']);
 
 Route::get('/student/examlink/{id}' , [ExamController::class , 'verification']);
 Route::get('/student/exam/{id}' , [ExamController::class , 'takeExam']);

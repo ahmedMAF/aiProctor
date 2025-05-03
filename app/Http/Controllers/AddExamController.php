@@ -100,4 +100,9 @@ class AddExamController extends Controller
 
         return redirect('/teacher/update/'.$examId);
     }
+
+    public function delete($examId){
+        Exam::destroy($examId);
+        return redirect('/profile');
+    }
 }

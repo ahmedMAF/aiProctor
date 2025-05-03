@@ -83,7 +83,7 @@
                 <p class="correct">The correct answer is <span>{{$q->answers[$q->correct_answer - 1]}}</span></p>
                 <p>Grade <span>{{$q->grade}}</span></p>
                 <div>
-                    <button class="delete">Delete</button>
+                    <button class="delete" onclick="deleteQ({{$q->id}} , {{$exam->id}})">Delete</button>
                     <button class="update">Update</button>
                 </div>
             </div>
@@ -101,7 +101,7 @@
                 <p class="correct">The correct answer is <span>{{$q->answers[$q->correct_answer - 1]}}</span></p>
                 <p>Grade <span>{{$q->grade}}</span></p>
                 <div>
-                    <button class="delete">Delete</button>
+                    <button class="delete" onclick="deleteQ({{$q->id}} , {{$exam->id}})">Delete</button>
                     <button class="update">Update</button>
                 </div>
             </div>
@@ -170,9 +170,21 @@
             </div>
         </div>
     </div>
+    <form id="delete-form" method="POST" style="display:none;">
+        @csrf
+        @method('DELETE')
+    </form>
+    
 </section>
 @endsection
 
 @section("js")
 <script src="{{asset('JS/create-exam.js')}}"></script>
+<script>
+    function deleteQ(id , exam) {
+        let form = document.getElementById('delete-form');
+        form.action = '/teacher/deleteQ/' + id + '/' + exam;
+        form.submit();
+    }
+</script>
 @endsection

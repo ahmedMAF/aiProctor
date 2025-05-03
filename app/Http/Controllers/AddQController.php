@@ -63,4 +63,9 @@ class AddQController extends Controller
         }
 
     }
+
+    public function delete($id , $examId){
+        Question::destroy($id);
+        return redirect('/teacher/update/'.$examId);
+    }
 }

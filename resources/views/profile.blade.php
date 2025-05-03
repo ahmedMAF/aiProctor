@@ -69,7 +69,7 @@
                         <div class="button">
                             <a href="/teacher/addQ/{{$exam->id}}" class="btn">Questions</a>
                             <a href="/teacher/students/{{$exam->id}}" class="btn">Students</a>
-                            <a class="btn">Delete</a>
+                            <button class="btn" onclick="deleteExam({{$exam->id}})">Delete</button>
                             <a href="/teacher/update/{{$exam->id}}" class="btn">Update</a>
                         </div>
                     </div>
@@ -80,6 +80,10 @@
         <div class="exams">
             <a href="/teacher/add" class="btn">Add an Exam</a>
         </div>
+        <form id="delete-form" method="POST" style="display:none;">
+            @csrf
+            @method('DELETE')
+        </form>
 @else
 {{--for steadent--}}
         <div class="exams">
@@ -99,6 +103,12 @@
         </div>
 @endif
     </div>
+    
 </section>
 @endsection
 
+@if ($user->account_type)
+    @section('js')
+    <script src="{{asset('JS/profile.js')}}"></script>
+    @endsection
+@endif
