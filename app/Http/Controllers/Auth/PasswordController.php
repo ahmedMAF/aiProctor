@@ -26,4 +26,27 @@ class PasswordController extends Controller
 
         return back()->with('status', 'password-updated');
     }
+
+    public function updateImage(Request $request){
+        $user = $request->user();
+        $oldImage = $user->profile_pic;
+        $request->validate([
+            'image' => ['nullable'],
+        ]);
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/profile_pics'), $imageName);
+
+            if ($oldImage && file_exists(public_path('uploads/profile_pics/' . $oldImage))) {
+                unlink(public_path('uploads/profile_pics/' . $oldImage));
+            }
+        } else {
+            $imageName = $oldImage;
+        }
+
+        $user->update(['profile_pic' => $imageName]);
+        
+        return redirect('/profile');
+    }
 }

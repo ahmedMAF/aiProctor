@@ -141,3 +141,12 @@ section .exams .group .exam .button{
 section .exams .group .exam .button button{
     margin-bottom: 0px;
 }
+
+.errors ul{
+    list-style: none;
+    padding: 0px;
+    text-align: center;
+}
+.errors ul li{
+    color: #E74C3C;
+}

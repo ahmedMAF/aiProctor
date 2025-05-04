@@ -10,10 +10,12 @@
 <section>
     <div class="continer">
         <div class="info">
-            <form action="">
+            <form action="{{ route('profile.updateImage') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PATCH')
                 <div class="image">
-                    <img src="{{asset('uploads/profile_pics/'.$user->profile_pic)}}" alt="Error">
-                    <input id="pen" type="file" hidden>
+                    <img id="profileImage" src="{{asset('uploads/profile_pics/'.$user->profile_pic)}}" alt="Error">
+                    <input id="pen" type="file" hidden name="image">
                     <label for="pen" class="pen"></label>
                 </div>
                 <div class="email">
@@ -26,11 +28,24 @@
             </form>
         </div>
         <div class="password">
-            <form action="" method="">
+            <form action="{{ route('password.update') }}" method="POST">
+                @csrf
+                @method('put')
                 <h2>Change Password</h2>
-                <div class="input"><input type="password" required placeholder="Old Password"></div>
-                <div class="input"><input type="password" required placeholder="New Password"></div>
-                <div class="input"><input type="password" required placeholder="Confirm New Password"></div>
+                <div class="input">
+                    <input type="password" required placeholder="Old Password" name="current_password">
+                 </div>
+                <div class="input">
+                    <input type="password" required placeholder="New Password" name="password">
+                 </div>
+                <div class="input">
+                    <input type="password" required placeholder="Confirm New Password" name="password_confirmation">
+                 </div>
+                <div class="errors">
+                    <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
+                    <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
+                    <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
+                </div>
                 <input class="btn m-t" type="submit" value="Change">
             </form>
         </div>
