@@ -1,8 +1,8 @@
 section{
     margin-top: 100px;
     color: white;
-} 
-section .info, section .Add-Q{
+}
+section .Add-Q{
     background-color: var(--color-bg1 , #2e3267);
     box-sizing: border-box;
     padding: 40px;
@@ -13,7 +13,7 @@ section .info, section .Add-Q{
     margin: 0px auto;
     margin-bottom: 100px;
 }
-section .info input, textarea, section .Add-Q input, select{
+textarea, section .Add-Q input, select{
     width: 100%;
     border: none;
     box-sizing: border-box;
@@ -29,7 +29,7 @@ input::placeholder, textarea::placeholder{
 input:focus, textarea:focus, select:focus{
     outline: none;
 }
-section .info .create ,section .Add-Q .add, section .Add-Q .save, .q .delete, .q .update{
+section .Add-Q .save{
     color: white;
     display: block;
     padding: 10px 20px;
@@ -40,45 +40,15 @@ section .info .create ,section .Add-Q .add, section .Add-Q .save, .q .delete, .q
     width: fit-content;
     margin: auto;
     text-decoration: none;
+    margin: auto;
     font-size: 15px;
 }
-section .info label{
-    display: block;
-    margin-bottom: 10px;
-}
-section .info .nav, .t-o-f .true, .choice .choice{
+.t-o-f .true, .choice .choice{
     display: flex;
 }
-section .info .nav input, .t-o-f .true , .choice .choice input{
+.t-o-f .true , .choice .choice input{
     width: fit-content;
-}
-section .info .Navigation{
-    margin-bottom: 15px;
-}
-section .info .Navigation h3{
-    margin-top: 0px;
-    margin-bottom: 10px;
 }
 section .m-c input[type="checkbox"]{
     margin: 0px 5px 30px 0px !important;
-}
-
-section .qes{
-    background-color: var(--color-bg1, #2e3267);
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
-    padding: 10px 20px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-}
-section .qes p{
-    margin-top: 0px;
-}
-section .qes .correct{
-    margin-top: 30px;
-}
-.Add-Q .contant , .Add-Q .t-o-f , .Add-Q .m-c{
-    display: none;
-}
-.q .delete, .q .update{
-    display: inline !important;
 }

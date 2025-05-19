@@ -84,7 +84,7 @@
                 <p>Grade <span>{{$q->grade}}</span></p>
                 <div>
                     <button class="delete" onclick="deleteQ({{$q->id}} , {{$exam->id}})">Delete</button>
-                    <button class="update">Update</button>
+                    <a href="/teacher/editQ/{{$q->id}}" class="update">Update</a>
                 </div>
             </div>
             @else 
@@ -102,7 +102,7 @@
                 <p>Grade <span>{{$q->grade}}</span></p>
                 <div>
                     <button class="delete" onclick="deleteQ({{$q->id}} , {{$exam->id}})">Delete</button>
-                    <button class="update">Update</button>
+                    <a href="/teacher/editQ/{{$q->id}}" class="update">Update</a>
                 </div>
             </div>
             @endif

@@ -19,6 +19,11 @@ class ExamController extends Controller
     public function takeExam(Request $request , $id){
         $user = $request->user();
         $exam = Exam::where("id" , $id)->first();
+
+        if($exam->open_time > now()){
+            return view("exam-not-open" , ["open_time" => $exam->open_time]);
+         }
+
         $questions = Question::where("exam_id" , $id)->get();
 
         UserExam::create([
@@ -84,7 +89,7 @@ class ExamController extends Controller
         $correctAnswers = Question::where('exam_id', $id)->select('grade' , 'correct_answer')->get();
 
         foreach($answers as $answer){
-            if($answer == ($correctAnswers[$i]->correct_answer - 1)){
+            if($answer === ($correctAnswers[$i]->correct_answer - 1)){
                 $mark += $correctAnswers[$i]->grade;
             }
             $i++;

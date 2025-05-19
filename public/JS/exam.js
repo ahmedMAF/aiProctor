@@ -15,7 +15,12 @@ setInterval(function(){
     let minutes = Math.floor(t / 60);
     let seconds = t % 60;
     time.textContent = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
-    t--;
+    if(minutes == 0 && seconds == 0){
+        document.getElementById("finish").click();
+    }
+    else{
+        t--;
+    }
 },1000);
 
 //next.onclick = loadNextQuestion();
@@ -28,13 +33,16 @@ function loadNextQuestion() {
             'X-CSRF-TOKEN': token
         },
         body: JSON.stringify({
-            answer: document.querySelector('input[name="answer"]:checked').value,
+            answer: document.querySelector('input[name="answer"]:checked')?.value || null,
             questionId : qId.value,
         })
     })
     .then(response => {
-        document.querySelector('input[name="answer"]:checked').checked = false;
-        if (response.status === 404) {
+        let check = document.querySelector('input[name="answer"]:checked');
+        if(check){
+            check.checked = false;
+        }
+         if (response.status === 404) {
             multipleChoose.style.display = 'none';
             trueOrFalse.style.display = 'none';
             questionText.innerText = "Good luck, you have completed the exam";

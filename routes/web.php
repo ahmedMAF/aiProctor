@@ -34,6 +34,8 @@ Route::delete('/teacher/delete/{examId}' , [AddExamController::class , 'delete']
 Route::get('/teacher/addQ/{id}' , [AddQController::class , 'questions']);
 Route::post('/teacher/addQ/{id}' , [AddQController::class , 'add']);
 Route::delete('/teacher/deleteQ/{id}/{examId}' , [AddQController::class , 'delete']);
+Route::get('/teacher/editQ/{q}' , [AddQController::class , 'edit']);
+Route::put('/teacher/editQ/{q}' , [AddQController::class , 'editQ']);
 
 Route::get('/student/examlink/{id}' , [ExamController::class , 'verification']);
 Route::get('/student/exam/{id}' , [ExamController::class , 'takeExam']);

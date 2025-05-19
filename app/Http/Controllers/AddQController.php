@@ -68,4 +68,43 @@ class AddQController extends Controller
         Question::destroy($id);
         return redirect('/teacher/update/'.$examId);
     }
+
+    public function edit($q){
+        $ques = Question::find($q);
+        return view('edit-q' , ["q" => $ques]);
+    }
+    public function editQ(Request $request , $q){
+        $ques = Question::find($q);
+        if($request->type == 1){
+            $validated = $request->validate([
+                'text' => 'required',
+                'grade' => 'required|numeric',
+                'type' => 'required|numeric',
+                'answers' => 'required|array',
+                'answers.*' => 'required',
+                'correct' => 'required|numeric',
+            ]);
+            $ques->text = $validated["text"];
+            $ques->grade = $validated["grade"];
+            $ques->type = $validated["type"];
+            $ques->correct_answer = $validated["correct"];
+            $ques->answers = $validated["answers"];
+            $ques->save();
+        }
+       elseif($request->type == 2){
+            $validated = $request->validate([
+                'text' => 'required',
+                'grade' => 'required|numeric',
+                'type' => 'required|numeric',
+                'tof' =>'required',
+            ]);
+            $ques->text = $validated["text"];
+            $ques->grade = $validated["grade"];
+            $ques->type = $validated["type"];
+            $ques->correct_answer = $validated["tof"];
+            $ques->answers = ['true', 'false'];
+            $ques->save();
+        }
+        return redirect('/teacher/update/'.$ques->exam_id);
+    }
 }
