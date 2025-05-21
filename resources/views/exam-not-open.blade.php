@@ -8,6 +8,10 @@
 
 @section('section')
 <section>
+    @if ($done == 1)
+    <p>You have already taken the exam, please contact your teacher to open another attempt for you</p>
+    @else
     <p>The exam has not started yet, it will open at {{$open_time}}</p>
-</section>
+    @endif
+ </section>
 @endsection

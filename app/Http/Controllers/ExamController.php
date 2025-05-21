@@ -12,17 +12,22 @@ use Carbon\Carbon;
 
 class ExamController extends Controller
 {
-    public function verification($id){
+    public function verification(Request $request , $id){
+        $exam = Exam::find($id);
+        if($exam->open_time > now()){
+            return view("exam-not-open" , ["open_time" => $exam->open_time , "done" => 0]);
+         }
+         $user = $request->user();
+         $userExam = UserExam::where('user_id', $user->id)->where('exam_id', $id)->first();
+         if($userExam){
+            return view("exam-not-open" , ["done" => 1]);
+         }
         return view("exam-link" , ['id' => $id]);
     }
 
     public function takeExam(Request $request , $id){
         $user = $request->user();
         $exam = Exam::where("id" , $id)->first();
-
-        if($exam->open_time > now()){
-            return view("exam-not-open" , ["open_time" => $exam->open_time]);
-         }
 
         $questions = Question::where("exam_id" , $id)->get();
 
