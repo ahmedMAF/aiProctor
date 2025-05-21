@@ -17,7 +17,7 @@ return new class extends Migration
             $table->mediumText('description');
             $table->dateTime('open_time');
             $table->dateTime('close_time');
-            $table->time('duration');
+            $table->integer('duration');
             $table->integer('full_mark');
             $table->integer('pass_mark');
             $table->boolean('is_sequential');
