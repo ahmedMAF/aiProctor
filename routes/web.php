@@ -27,6 +27,7 @@ Route::get('/teacher/add' , [AddExamController::class , 'add']);
 Route::post('/teacher/add' , [AddExamController::class , 'addExam']);
 Route::get('/teacher/students/{id}' , [AddExamController::class , 'students']);
 Route::get('/teacher/students/report/{studentId}/{examId}' , [AddExamController::class , 'report']);
+Route::get('/teacher/students/retry/{student}/{studentId}/{examId}' , [AddExamController::class , 'retry']);
 Route::get('/teacher/update/{examId}' , [AddExamController::class , 'updateExam']);
 Route::put('/teacher/update/{examId}' , [AddExamController::class , 'update']);
 Route::delete('/teacher/delete/{examId}' , [AddExamController::class , 'delete']);

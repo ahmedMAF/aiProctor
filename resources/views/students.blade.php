@@ -23,7 +23,10 @@
                     <tr>
                         <td>{{$student->user->name}}</td>
                         <td>{{$student->mark}} out of {{$fullMark}}</td>
-                        <td><a href="/teacher/students/report/{{$student->user->id}}/{{$examId}}">Report</a></td>
+                        <td>
+                            <a href="/teacher/students/report/{{$student->user->id}}/{{$examId}}">Report</a>
+                            <a href="/teacher/students/retry/{{$student->id}}/{{$student->user->id}}/{{$examId}}">Retry</a>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

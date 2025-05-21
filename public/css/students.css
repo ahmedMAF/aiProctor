@@ -1,7 +1,7 @@
 section{
     margin-top: 100px;
     color: white;
-} 
+}
 section .table{
     background-color: var(--color-bg1 , #2e3267);
     box-sizing: border-box;
@@ -23,7 +23,7 @@ th, td {
     padding: 10px;
 }
 tr td a{
-    display: block;
+    display: inline-block;
     padding: 10px 20px;
     border-radius: 5px;
     border: none;

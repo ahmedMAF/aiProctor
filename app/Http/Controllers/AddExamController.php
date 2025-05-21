@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Exam;
 use App\Models\UserExam;
 use App\Models\Question;
+use App\Models\Answer;
 
 class AddExamController extends Controller
 {
@@ -59,6 +60,12 @@ class AddExamController extends Controller
         return view("report" , ["student" => $student]);
     }
 
+    public function retry($student , $studentId , $examId){
+        UserExam::destroy($student);
+        Answer::where("user_id" , $studentId)->where("exam_id" , $examId)->delete();
+        return redirect('/teacher/students/'.$examId);
+    }
+
     public function updateExam($examId){
         $exam = Exam::find($examId);
         $questions = Question::where("exam_id" , $examId)->get();
@@ -79,7 +86,7 @@ class AddExamController extends Controller
                 'full-mark' => 'required|numeric',
                 'pass-mark' => 'required|numeric',
             ]);
- 
+
             if($request->Shuffling != 1){
                 $validated['Shuffling'] = 0;
             }
