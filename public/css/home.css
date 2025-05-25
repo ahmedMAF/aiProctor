@@ -1,0 +1,171 @@
+:root {
+    --primary: #0a2f5c;
+    --secondary: #f5f7fa;
+    --accent: #0066cc;
+    --text-dark: #222;
+    --text-light: #fff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+section {
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+.hero {
+    color: var(--text-light);
+    text-align: center;
+    height: 100vh;
+}
+
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto 30px;
+}
+
+.hero .buttons a {
+    padding: 12px 25px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--color-bg2);
+    color: white;
+    margin: 0px auto 25px auto;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.features,
+.demo {
+    padding-top: 100px;
+    padding-bottom: 100px;
+    color: white;
+    background-color: var(--primary);
+}
+
+.how-it-works,
+.faq {
+    padding-top: 100px;
+    padding-bottom: 100px;
+    color: white;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2rem;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.feature {
+    background-color: var(--accent);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+}
+
+.steps {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.step {
+    background-color: var(--primary);
+    padding: 20px;
+    border-left: 5px solid var(--accent);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.step:hover {
+    background-color: var(--accent);
+}
+
+.demo iframe {
+    display: block;
+    margin: auto;
+    border: none;
+    border-radius: 8px;
+}
+
+.faq-item {
+    background-color: var(--primary);
+    margin-bottom: 15px;
+    border-radius: 6px;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.faq-item.active {
+    background-color: var(--accent);
+}
+
+.faq-answer {
+    display: none;
+    margin-top: 10px;
+}
+
+.footer {
+    text-align: center;
+    background-color: var(--primary);
+    color: white;
+    padding: 50px 20px 30px 20px;
+}
+
+.footer .links {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.footer h4 {
+    margin-bottom: 15px;
+}
+
+.footer .links a,
+.footer .contact span {
+    display: block;
+    margin-bottom: 7px;
+    text-decoration: none;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .section-title {
+        font-size: 1.6rem;
+    }
+}
