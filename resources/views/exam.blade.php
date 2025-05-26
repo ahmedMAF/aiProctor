@@ -74,6 +74,7 @@
 @section('js')
     <script src="{{asset('JS/exam.js')}}"></script>
     <script>
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         let examId = {{$id}};
         let myvad;
 
@@ -99,6 +100,19 @@
                         const wavBytes = vad.utils.encodeWAV(audio);
                         const wavBlob = new Blob([wavBytes], { type: 'audio/wav' });
                         //uplod wavBlob
+                        const formData = new FormData();
+                        formData.append('file', wavBlob, 'speech.wav');
+                        fetch(`/exam/report/${examId}`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': csrfToken
+                            },
+                            body: formData
+                        })
+                            .then(response => response.json())
+                            .then(data => console.log('Upload success:', data))
+                            .catch(error => console.error('Upload error:', error))
+
                         console.log("Speech Ended");
                     }
                 });

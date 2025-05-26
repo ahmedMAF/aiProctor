@@ -44,6 +44,8 @@ Route::POST('/exam/next-question/{id}' , [ExamController::class , 'nextQuestion'
 Route::POST('/exam/finish/{id}' , [ExamController::class , 'finish'])->middleware('auth');
 Route::get('/exam/next-question/refresh/{id}' , [ExamController::class , 'refresh'])->middleware('auth');
 
+Route::post('/exam/report/{examId}' , [ExamController::class , 'report'])->middleware('auth');
+
 Route::get('/student/review/{id}' , [StudentController::class , 'review'])->middleware('auth');
 
 require __DIR__.'/auth.php';
