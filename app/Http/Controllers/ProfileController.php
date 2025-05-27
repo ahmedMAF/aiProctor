@@ -32,6 +32,21 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function exams(Request $request): View
+    {
+        $user = $request->user();
+        if($user->account_type){
+            $exams = Exam::where("user_id" , $user->id)->get();
+        }
+        else{
+            $exams = UserExam::with('exam')->where("user_id" , $user->id)->get();
+        }
+        return view('exams', [
+            'user' => $user,
+            'exams' => $exams,
+        ]);
+    }
+
     /**
      * Update the user's profile information.
      */

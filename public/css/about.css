@@ -75,10 +75,14 @@ ul {
 
 .footer .links {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-bottom: 50px;
 }
-
+.footer .links .link , .footer .links .contact{
+    width: fit-content;
+    padding: 0px 10px;
+    margin-bottom: 30px;
+}
 .footer h4 {
     margin-bottom: 15px;
 }

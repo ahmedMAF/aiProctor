@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 :root {
     --primary: #0a2f5c;
     --secondary: #f5f7fa;
@@ -144,8 +148,16 @@ section {
 
 .footer .links {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    flex-wrap: wrap;
     margin-bottom: 50px;
+}
+
+.footer .links .link,
+.footer .links .contact {
+    width: fit-content;
+    padding: 0px 10px;
+    margin-bottom: 30px;
 }
 
 .footer h4 {

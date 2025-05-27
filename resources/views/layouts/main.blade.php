@@ -22,9 +22,9 @@
                 @else
                 @if (Auth::user()->account_type)
                 <li><a href="/teacher/add">New exam</a></li>
-                <li><a href="">Exams</a></li>
+                <li><a href="/exams">Exams</a></li>
                 @else
-                <li><a href="">Exams</a></li>
+                <li><a href="/exams">Exams</a></li>
                 @endif
                 <li><a href="/profile">Profile</a></li>
                 <li>

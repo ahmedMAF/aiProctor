@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Profile')
+@section('title', 'Exams')
 
 @section('style')
     <link rel="stylesheet" href="{{ asset('css/student.css') }}">
@@ -9,46 +9,7 @@
 @section('section')
     <section>
         <div class="continer">
-            <div class="info">
-                <form action="{{ route('profile.updateImage') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PATCH')
-                    <div class="image">
-                        <img id="profileImage" src="{{ asset('uploads/profile_pics/' . $user->profile_pic) }}" alt="Error">
-                        <input id="pen" type="file" hidden name="image">
-                        <label for="pen" class="pen"></label>
-                    </div>
-                    <div class="email">
-                        <h3>{{ $user->email }}</h3>
-                    </div>
-                    <div class="name">
-                        <h3>{{ $user->name }}</h3>
-                    </div>
-                    <input class="btn m-t" type="submit" value="Update">
-                </form>
-            </div>
-            <div class="password">
-                <form action="{{ route('password.update') }}" method="POST">
-                    @csrf
-                    @method('put')
-                    <h2>Change Password</h2>
-                    <div class="input">
-                        <input type="password" required placeholder="Old Password" name="current_password">
-                    </div>
-                    <div class="input">
-                        <input type="password" required placeholder="New Password" name="password">
-                    </div>
-                    <div class="input">
-                        <input type="password" required placeholder="Confirm New Password" name="password_confirmation">
-                    </div>
-                    <div class="errors">
-                        <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
-                        <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
-                        <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
-                    </div>
-                    <input class="btn m-t" type="submit" value="Change">
-                </form>
-            </div>
+
             @if ($user->account_type)
                 {{-- for reacher --}}
                 <div class="exams">
@@ -124,21 +85,13 @@
 
 @if ($user->account_type)
     @section('js')
-        <script src="{{ asset('JS/profile.js') }}"></script>
-    @endsection
-@else
-    @section('js')
         <script>
-            document.getElementById('pen').addEventListener('change', function(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        document.getElementById('profileImage').src = e.target.result;
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
+            let form = document.getElementById('delete-form');
+
+            function deleteExam(id) {
+                form.action = '/teacher/delete/' + id;
+                form.submit();
+            }
         </script>
     @endsection
 @endif

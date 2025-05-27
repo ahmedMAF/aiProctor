@@ -22,7 +22,7 @@
         </section>
 
         <!-- Features -->
-        <section class="features">
+        <section class="features" id="demo">
             <h2 class="section-title">Powerful Features</h2>
             <div class="feature-grid">
                 <div class="feature">Face recognition for identity verification</div>
@@ -49,7 +49,7 @@
         </section>
 
         <!-- Demo Video -->
-        <section class="demo" id="demo">
+        <section class="demo">
             <h2 class="section-title">System Demo</h2>
             <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
         </section>
