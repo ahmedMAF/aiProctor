@@ -35,7 +35,7 @@
                             <td>{{$violation['type']}}</td>
                             <td>{{$violation['time']}}</td>
                             <td>{{$violation['description']}}</td>
-                            <td><a href="">Watch Video</a></td>
+                            <td><a href="/exam/report/prove/{{$violation['path']}}">Listen</a></td>
                         </tr>
                         @endforeach
                     </tbody>

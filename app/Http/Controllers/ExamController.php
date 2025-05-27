@@ -137,4 +137,9 @@ class ExamController extends Controller
 
         return response()->json(['success' => false, 'message' => 'No file received'], 400);
     }
+
+    public function prove($name)
+    {
+        return view('prove', ['name' => $name]);
+    }
 }
