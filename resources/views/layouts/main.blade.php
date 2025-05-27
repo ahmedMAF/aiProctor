@@ -15,7 +15,7 @@
             <a href="">Logo</a>
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="">About</a></li>
+                <li><a href="/about">About</a></li>
                 @guest
                 <li><a href="/login">Login</a></li>
                 <li><a href="/register">Signup</a></li>
