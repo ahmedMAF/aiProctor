@@ -77,6 +77,8 @@
         let examId = {{ $id }};
     </script>
     <script src="{{ asset('JS/exam.js') }}"></script>
+    <script src="{{ asset('JS/face-api.js') }}"></script>
+    <script src="{{ asset('JS/final.js') }}"></script>
     <script>
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         let myvad;
@@ -96,9 +98,6 @@
         async function startMic() {
             if (!myvad) {
                 myvad = await vad.MicVAD.new({
-                    onSpeechStart: () => {
-                        console.log("Speech Detected");
-                    },
                     onSpeechEnd: (audio) => {
                         const wavBytes = vad.utils.encodeWAV(audio);
                         const wavBlob = new Blob([wavBytes], {
@@ -115,10 +114,8 @@
                                 body: formData
                             })
                             .then(response => response.json())
-                            .then(data => console.log('Upload success:', data))
                             .catch(error => console.error('Upload error:', error))
 
-                        console.log("Speech Ended");
                     }
                 });
             }
