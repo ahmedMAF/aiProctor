@@ -141,6 +141,7 @@ function detectOffScreenGaze(landmarks) {
     if (offScreenDirection && !hasSentOffScreen) {
         hasSentOffScreen = true;
         // Replace with new recording logic
+        console.log("offscreen detected");
         recordProofVideo('offscreen');
     } else if (!offScreenDirection) {
         hasSentOffScreen = false;
@@ -171,19 +172,19 @@ async function startDetection() {
 
             // No face detected
             if (detections.length === 0) {
-                // ... same timing logic ...
                 if (Date.now() - noFaceStartTime >= NO_FACE_DELAY && !hasSentNoFace) {
                     hasSentNoFace = true;
-                    recordProofVideo('No face detected'); // Updated
+                    console.log("Noface detected");
+                    recordProofVideo('Noface detected'); // Updated
                 }
                 return;
             }
             // Multiple faces detected
             else if (detections.length > 1) {
-                // ... same logic ...
                 if (!hasSentMultipleFaces && !isFaceCurrentlyDetected) {
                     hasSentMultipleFaces = true;
-                    recordProofVideo('Multiple faces detected'); // Updated
+                    console.log("Multiface detected");
+                    recordProofVideo('Multiface detected'); // Updated
                 }
                 return;
             }
@@ -241,6 +242,9 @@ async function startRecording() {
 }
 
 async function recordProofVideo(reason) {
+    console.log("recording for " + reason + "... ");
+    console.log("other event recorging? " + isProcessingEvent);
+
     if (isProcessingEvent) return;
     isProcessingEvent = true;
 
@@ -264,7 +268,6 @@ async function recordProofVideo(reason) {
     eventRecorder.ondataavailable = (e) => {
         if (e.data.size > 0) eventChunks.push(e.data);
     };
-
         eventRecorder.start();
 
         // Record for the full MAX_EVENT_SECONDS (including pre-event)
@@ -291,6 +294,8 @@ async function recordProofVideo(reason) {
 }
 
 async function sendProofVideo(blob, reason) {
+    console.log(`sending proof video: ${reason}`);
+
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const formData = new FormData();
     formData.append('video', blob, 'proof.webm');
