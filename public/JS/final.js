@@ -89,8 +89,8 @@ function attemptAutoCalibration(landmarks) {
 
     // Assume center of screen is midpoint
     const isLookingAtCenter =
-        Math.abs(eyeCenterX / 640 - 0.5) < 0.05 &&
-        Math.abs(eyeCenterY / 480 - 0.5) < 0.05;
+    Math.abs(eyeCenterX / 640 - 0.5) < 0.05 &&
+    Math.abs(eyeCenterY / 480 - 0.5) < 0.05;
 
     if (isLookingAtCenter) {
         stableFramesCount++;
@@ -165,9 +165,9 @@ async function startDetection() {
     video.addEventListener('play', () => {
         setInterval(async () => {
             const detections = await faceapi.detectAllFaces(video,
-                new faceapi.TinyFaceDetectorOptions())
-                .withFaceLandmarks()
-                .withFaceExpressions();
+                                                            new faceapi.TinyFaceDetectorOptions())
+            .withFaceLandmarks()
+            .withFaceExpressions();
 
             // No face detected
             if (detections.length === 0) {
@@ -247,6 +247,11 @@ async function recordProofVideo(reason) {
     // Stop current recording to preserve buffer
     mediaRecorder.stop();
 
+    // Wait for mediaRecorder to finish processing
+    await new Promise(resolve => {
+        mediaRecorder.onstop = resolve;
+    });
+
     // Capture pre-event footage
     const preEventChunks = [...recordedChunks];
     recordedChunks = [];
@@ -260,14 +265,19 @@ async function recordProofVideo(reason) {
         if (e.data.size > 0) eventChunks.push(e.data);
     };
 
-    eventRecorder.start();
+        eventRecorder.start();
 
-    // Stop after MAX_EVENT_SECONDS total
-    setTimeout(() => {
-        eventRecorder.stop();
-    }, (MAX_EVENT_SECONDS - PRE_EVENT_SECONDS) * 1000);
+        // Record for the full MAX_EVENT_SECONDS (including pre-event)
+        const eventDuration = MAX_EVENT_SECONDS * 1000;
+        setTimeout(() => {
+            eventRecorder.stop();
+        }, eventDuration);
 
-    eventRecorder.onstop = async () => {
+        // Wait for event recorder to finish
+        await new Promise(resolve => {
+            eventRecorder.onstop = resolve;
+        });
+
         // Combine pre-event and event footage
         const proofChunks = [...preEventChunks, ...eventChunks];
         const blob = new Blob(proofChunks, { type: 'video/webm' });
@@ -278,7 +288,6 @@ async function recordProofVideo(reason) {
         // Restart main recording
         startRecording();
         isProcessingEvent = false;
-    };
 }
 
 async function sendProofVideo(blob, reason) {
