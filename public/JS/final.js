@@ -43,29 +43,117 @@ let calibrationData = {
     eyeDistance: null
 };
 
+let commonVideo = null;
+let commonStream = null;
+let detectionInterval = null;
+let calibrationIndicator = null;
 
-// Core logic
 async function initFaceAPI() {
-    await faceapi.nets.tinyFaceDetector.loadFromUri('/models');
-    await faceapi.nets.faceLandmark68TinyNet.loadFromUri('/models');
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    const video = document.createElement('video');
-    video.srcObject = stream;
-    video.play();
-    video.onplay = () => detectFaces(video);
+    // Load all required models once
+    await Promise.all([
+        faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+        faceapi.nets.faceLandmark68TinyNet.loadFromUri('/models'),
+        faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+        faceapi.nets.faceExpressionNet.loadFromUri('/models')
+    ]);
+
+    // Create video element if it doesn't exist
+    if (!commonVideo) {
+        commonStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        commonVideo = document.createElement('video');
+        commonVideo.srcObject = commonStream;
+    }
+
+    // Start detection when video plays
+    commonVideo.addEventListener('play', startCombinedDetection);
+    await commonVideo.play();
+}
+
+async function startCombinedDetection() {
+    // Clear any existing interval
+    if (detectionInterval) clearInterval(detectionInterval);
+
+    detectFaces(commonVideo);
+
+    detectionInterval = setInterval(async () => {
+        const detections = await faceapi.detectAllFaces(commonVideo, new faceapi.TinyFaceDetectorOptions())
+            .withFaceLandmarks()
+            .withFaceExpressions();
+
+        const isNormalState = detections.length === 1;
+        const isNoFaceState = detections.length === 0;
+        const isMultiFaceState = detections.length > 1;
+
+        // Handle state transitions FIRST
+        if (isNormalState && !wasNormalState) {
+            // Transitioned from abnormal to normal: Reset flags
+            hasSentNoFace = false;
+            hasSentMultipleFaces = false;
+        }
+
+        // No face detected
+        if (isNoFaceState) {
+            if (noFaceStartTime === null)
+                noFaceStartTime = Date.now();
+
+            if (Date.now() - noFaceStartTime >= NO_FACE_DELAY && !hasSentNoFace) {
+                hasSentNoFace = true;
+                console.log("Noface detected");
+                recordProofVideo('Noface detected');
+            }
+        }
+        // Multiple faces detected
+        else if (isMultiFaceState) {
+            if (!hasSentMultipleFaces) {
+                hasSentMultipleFaces = true;
+                console.log("Multiface detected");
+                recordProofVideo('Multiface detected');
+            }
+
+            noFaceStartTime = null;
+        }
+        // Single face detected
+        else {
+            if (currentEvent == EVENT.NO_FACE || currentEvent == EVENT.MULTI_FACE) {
+                console.log("we should stop recording now");
+                manualStop();
+            }
+
+            // Expression tracking logic
+            const top = Object.entries(detections[0].expressions)
+                .sort((a, b) => b[1] - a[1])[0];
+
+            if (lastResult !== top[0]) {
+                addToArray(top[0]);
+                lastResult = top[0];
+            }
+
+            // Reset no-face timer
+            noFaceStartTime = null;
+        }
+
+        // UPDATE PREVIOUS STATE FOR NEXT INTERVAL
+        wasNormalState = isNormalState;
+    }, 333);
 }
 
 async function detectFaces(video) {
-    const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 128, scoreThreshold: 0.5 });
-    const result = await faceapi.detectSingleFace(video, options).withFaceLandmarks(true);
+    const result = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks(true);
     if (result) onFaceDetected(result.landmarks);
     requestAnimationFrame(() => detectFaces(video));
 }
 
 function onFaceDetected(landmarks) {
     if (!isCalibrated) {
+        if (!calibrationIndicator && !document.getElementById('calibration-indicator')) {
+            calibrationIndicator = createCalibrationIndicator();
+        }
+        
         attemptAutoCalibration(landmarks);
     } else {
+        if (calibrationIndicator)
+            removeCalibrationIndicator();
+        
         detectOffScreenGaze(landmarks);
     }
 }
@@ -99,7 +187,9 @@ function attemptAutoCalibration(landmarks) {
         Math.abs(eyeCenterY / 480 - 0.5) < 0.05;
 
     if (isLookingAtCenter) {
+        console.log("Auto-calibration in progress " + stableFramesCount + "...");
         stableFramesCount++;
+
         if (stableFramesCount > 30) {
             calibrationData = { leftEyeCenter, rightEyeCenter, headPosition, eyeDistance };
             isCalibrated = true;
@@ -156,81 +246,6 @@ function addToArray(item) {
     localStorage.setItem('myData', JSON.stringify(dataArray));
 }
 
-async function startDetection() {
-    await faceapi.nets.tinyFaceDetector.loadFromUri('/models');
-    await faceapi.nets.faceLandmark68Net.loadFromUri('/models');
-    await faceapi.nets.faceExpressionNet.loadFromUri('/models');
-
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    const video = document.createElement('video');
-    video.srcObject = stream;
-    video.play();
-
-    video.addEventListener('play', () => {
-        setInterval(async () => {
-            const detections = await faceapi.detectAllFaces(video,
-                new faceapi.TinyFaceDetectorOptions())
-                .withFaceLandmarks()
-                .withFaceExpressions();
-
-            const isNormalState = detections.length === 1;
-            const isNoFaceState = detections.length === 0;
-            const isMultiFaceState = detections.length > 1;
-
-            // Handle state transitions FIRST
-            if (isNormalState && !wasNormalState) {
-                // Transitioned from abnormal to normal: Reset flags
-                hasSentNoFace = false;
-                hasSentMultipleFaces = false;
-            }
-
-            // No face detected
-            if (isNoFaceState) {
-                if (noFaceStartTime === null)
-                    noFaceStartTime = Date.now();
-
-                if (Date.now() - noFaceStartTime >= NO_FACE_DELAY && !hasSentNoFace) {
-                    hasSentNoFace = true;
-                    console.log("Noface detected");
-                    recordProofVideo('Noface detected');
-                }
-            }
-            // Multiple faces detected
-            else if (isMultiFaceState) {
-                if (!hasSentMultipleFaces) {
-                    hasSentMultipleFaces = true;
-                    console.log("Multiface detected");
-                    recordProofVideo('Multiface detected');
-                }
-
-                noFaceStartTime = null;
-            }
-            // Single face detected
-            else {
-                if (currentEvent == EVENT.NO_FACE || currentEvent == EVENT.MULTI_FACE) {
-                    console.log("we should stop recording now");
-                    manualStop();
-                }
-
-                // Expression tracking logic
-                const top = Object.entries(detections[0].expressions)
-                    .sort((a, b) => b[1] - a[1])[0];
-
-                if (lastResult !== top[0]) {
-                    addToArray(top[0]);
-                    lastResult = top[0];
-                }
-
-                // Reset no-face timer
-                noFaceStartTime = null;
-            }
-
-            // UPDATE PREVIOUS STATE FOR NEXT INTERVAL
-            wasNormalState = isNormalState;
-        }, 333);
-    });
-}
-
 function sendToServer() {
     const csrfToken2 = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const stored = localStorage.getItem('myData');
@@ -244,6 +259,31 @@ function sendToServer() {
         headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken2 },
         body: JSON.stringify(data)
     }).catch(() => { });
+}
+
+function createCalibrationIndicator() {
+    const indicator = document.createElement('div');
+    indicator.id = 'calibration-indicator';
+    indicator.style.position = 'fixed';
+    indicator.style.top = '50%';
+    indicator.style.left = '50%';
+    indicator.style.transform = 'translate(-50%, -50%)';
+    indicator.style.width = '30px';
+    indicator.style.height = '30px';
+    indicator.style.border = '3px solid rgba(255, 0, 0, 0.7)';
+    indicator.style.borderRadius = '50%';
+    indicator.style.zIndex = '9999';
+    indicator.style.pointerEvents = 'none';
+    indicator.style.boxShadow = '0 0 10px rgba(255, 0, 0, 0.5)';
+    document.body.appendChild(indicator);
+    return indicator;
+}
+
+function removeCalibrationIndicator() {
+    if (calibrationIndicator && document.body.contains(calibrationIndicator)) {
+        document.body.removeChild(calibrationIndicator);
+    }
+    calibrationIndicator = null;
 }
 
 // async function startRecording() {
@@ -374,6 +414,5 @@ async function sendProofVideo(blob, reason) {
 // }
 
 // Start everything
-initFaceAPI();
-startDetection();
+initFaceAPI()
 setInterval(sendToServer, 300000);
