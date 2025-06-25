@@ -278,6 +278,9 @@ function removeCalibrationIndicator() {
         document.body.removeChild(calibrationIndicator);
     }
     calibrationIndicator = null;
+    
+    // TODO: Send start time here. 
+    startExam();
 }
 
 // async function startRecording() {
