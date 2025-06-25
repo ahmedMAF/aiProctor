@@ -70,7 +70,10 @@ async function initFaceAPI() {
         commonStream = await navigator.mediaDevices.getUserMedia({ video: true });
         let div = document.getElementById('videoCal');
         commonVideo = document.createElement('video');
-        div.appendChild(commonVideo);
+        
+        if (!isCalibrated)
+            div.appendChild(commonVideo);
+        
         commonVideo.srcObject = commonStream;
     }
 
