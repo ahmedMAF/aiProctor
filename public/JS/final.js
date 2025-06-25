@@ -73,8 +73,6 @@ async function startCombinedDetection() {
     // Clear any existing interval
     if (detectionInterval) clearInterval(detectionInterval);
 
-    detectFaces(commonVideo);
-
     detectionInterval = setInterval(async () => {
         const detections = await faceapi.detectAllFaces(commonVideo, new faceapi.TinyFaceDetectorOptions())
             .withFaceLandmarks()
@@ -114,6 +112,8 @@ async function startCombinedDetection() {
         }
         // Single face detected
         else {
+            onFaceDetected(detections[0].landmarks);
+            
             if (currentEvent == EVENT.NO_FACE || currentEvent == EVENT.MULTI_FACE) {
                 console.log("we should stop recording now");
                 manualStop();
@@ -135,13 +135,6 @@ async function startCombinedDetection() {
         // UPDATE PREVIOUS STATE FOR NEXT INTERVAL
         wasNormalState = isNormalState;
     }, 333);
-}
-
-async function detectFaces(video) {
-    console.log("detectFaces");
-    const result = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks(true);
-    if (result) onFaceDetected(result.landmarks);
-    requestAnimationFrame(() => detectFaces(video));
 }
 
 function onFaceDetected(landmarks) {
