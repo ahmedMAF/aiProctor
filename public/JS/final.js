@@ -144,6 +144,7 @@ async function detectFaces(video) {
 }
 
 function onFaceDetected(landmarks) {
+    console.log("Face detected " + isCalibrated);
     if (!isCalibrated) {
         if (!calibrationIndicator && !document.getElementById('calibration-indicator')) {
             calibrationIndicator = createCalibrationIndicator();
@@ -262,6 +263,7 @@ function sendToServer() {
 }
 
 function createCalibrationIndicator() {
+    console.log("Creating calibration indicator...");
     const indicator = document.createElement('div');
     indicator.id = 'calibration-indicator';
     indicator.style.position = 'fixed';
@@ -280,6 +282,7 @@ function createCalibrationIndicator() {
 }
 
 function removeCalibrationIndicator() {
+    console.log("Removing calibration indicator...")
     if (calibrationIndicator && document.body.contains(calibrationIndicator)) {
         document.body.removeChild(calibrationIndicator);
     }
