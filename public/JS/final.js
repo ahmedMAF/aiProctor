@@ -60,7 +60,9 @@ async function initFaceAPI() {
     // Create video element if it doesn't exist
     if (!commonVideo) {
         commonStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        let div = document.getElementById('videoCal');
         commonVideo = document.createElement('video');
+        div.appendChild(commonVideo);
         commonVideo.srcObject = commonStream;
     }
 
