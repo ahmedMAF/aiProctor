@@ -34,6 +34,7 @@ let currentEvent = null;
 let mediaStream = null;
 let manualStop = null;
 
+let started = false;
 let isCalibrated = false;
 let stableFramesCount = 0;
 let calibrationData = {
@@ -49,6 +50,13 @@ let detectionInterval = null;
 let calibrationIndicator = null;
 
 async function initFaceAPI() {
+    let cal = JSON.parse(localStorage.getItem('calibrationData'));
+
+    if (cal) {
+        calibrationData = cal;
+        isCalibrated = true;
+    }
+
     // Load all required models once
     await Promise.all([
         faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
@@ -115,7 +123,7 @@ async function startCombinedDetection() {
         // Single face detected
         else {
             onFaceDetected(detections[0].landmarks);
-            
+
             if (currentEvent == EVENT.NO_FACE || currentEvent == EVENT.MULTI_FACE) {
                 console.log("we should stop recording now");
                 manualStop();
@@ -144,12 +152,18 @@ function onFaceDetected(landmarks) {
         if (!calibrationIndicator && !document.getElementById('calibration-indicator')) {
             calibrationIndicator = createCalibrationIndicator();
         }
-        
+
         attemptAutoCalibration(landmarks);
     } else {
         if (calibrationIndicator)
             removeCalibrationIndicator();
-        
+
+        if (!started) {
+            // TODO: Send start time here.
+            startExam();
+            started = true;
+        }
+
         detectOffScreenGaze(landmarks);
     }
 }
@@ -188,6 +202,7 @@ function attemptAutoCalibration(landmarks) {
 
         if (stableFramesCount > 30) {
             calibrationData = { leftEyeCenter, rightEyeCenter, headPosition, eyeDistance };
+            localStorage.setItem('calibrationData', JSON.stringify(calibrationData));
             isCalibrated = true;
         }
     } else {
@@ -280,9 +295,6 @@ function removeCalibrationIndicator() {
         document.body.removeChild(calibrationIndicator);
     }
     calibrationIndicator = null;
-    
-    // TODO: Send start time here. 
-    startExam();
 }
 
 // async function startRecording() {
