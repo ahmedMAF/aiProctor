@@ -272,7 +272,7 @@ function createCalibrationIndicator() {
     indicator.style.height = '30px';
     indicator.style.border = '3px solid rgba(255, 0, 0, 0.7)';
     indicator.style.borderRadius = '50%';
-    indicator.style.zIndex = '9999';
+    indicator.style.zIndex = '100000';
     indicator.style.pointerEvents = 'none';
     indicator.style.boxShadow = '0 0 10px rgba(255, 0, 0, 0.5)';
     document.body.appendChild(indicator);
