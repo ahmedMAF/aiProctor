@@ -139,6 +139,7 @@ async function startCombinedDetection() {
 
 async function detectFaces(video) {
     const result = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks(true);
+    console.log("Face " + result);
     if (result) onFaceDetected(result.landmarks);
     requestAnimationFrame(() => detectFaces(video));
 }
