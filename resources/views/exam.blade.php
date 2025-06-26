@@ -12,7 +12,8 @@
 
 @section('section')
     <section>
-        <div class="continer">
+        <div class="continer" style="position: relative">
+            <div class="videoCal" id="videoCal"></div>
             <div class="page">
                 <div class="left-qes">
                     <p id="time" class="timer">{{ $m }}:{{ $s }}</p>
