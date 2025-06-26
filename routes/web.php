@@ -50,11 +50,13 @@ Route::POST('/exam/finish/{id}', [ExamController::class, 'finish'])->middleware(
 Route::get('/exam/next-question/refresh/{id}', [ExamController::class, 'refresh'])->middleware('auth');
 
 Route::post('/exam/report/{examId}', [ExamController::class, 'report'])->middleware('auth');
+Route::post('/exam/report/video/{examId}', [ExamController::class, 'reportVideo'])->middleware('auth');
 Route::get('/exam/report/prove/{name}', [ExamController::class, 'prove'])->middleware('auth');
 
 Route::get('/student/review/{id}', [StudentController::class, 'review'])->middleware('auth');
 
 
+/*
 Route::post('/test', function (Request $request) {
     if ($request->hasFile('video')) {
         $video = $request->file('video');
@@ -62,6 +64,6 @@ Route::post('/test', function (Request $request) {
         $video->move(public_path('videos'), $videoName);
     }
 });
-
+*/
 
 require __DIR__ . '/auth.php';

@@ -35,7 +35,13 @@
                             <td>{{$violation['type']}}</td>
                             <td>{{$violation['time']}}</td>
                             <td>{{$violation['description']}}</td>
-                            <td><a href="/exam/report/prove/{{$violation['path']}}">Listen</a></td>
+                            <td><a href="/exam/report/prove/{{$violation['path']}}">
+                                @if ($violation['type'] == 'audio')
+                                    Listen
+                                @else
+                                    Watch
+                                @endif
+                            </a></td>
                         </tr>
                         @endforeach
                     </tbody>

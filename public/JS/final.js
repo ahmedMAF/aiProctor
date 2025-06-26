@@ -268,7 +268,7 @@ function sendToServer() {
     const data = JSON.parse(stored);
     if (!Object.keys(data).length) return;
 
-    fetch('/test', {
+    fetch(`/exam/report/video/${examId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken2 },
         body: JSON.stringify(data)
@@ -388,7 +388,7 @@ async function sendProofVideo(blob, reason) {
     formData.append('reason', reason);
 
     try {
-        await fetch('/test', {
+        await fetch(`/exam/report/video/${examId}`, {
             method: 'POST',
             headers: { 'X-CSRF-TOKEN': csrfToken },
             body: formData

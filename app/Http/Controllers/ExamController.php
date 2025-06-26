@@ -109,6 +109,36 @@ class ExamController extends Controller
         return redirect('/');
     }
 
+    public function reportVideo(Request $request, $examId)
+    {
+        if ($request->hasFile('video')) {
+            $user = $request->user()->id;
+
+            $video = $request->file('video');
+            $videoName = time() . '.' . $video->getClientOriginalExtension();
+            $video->move('uploads/report', $videoName);
+
+            //UserExam::where('user_id', $user)->where('exam_id', $examId)->update(['report' => $videoName]);
+            DB::table('user_exam')
+                ->where('user_id', $user)
+                ->where('exam_id', $examId)
+                ->update([
+                    'report' => DB::raw("
+                        JSON_ARRAY_APPEND(
+                        IFNULL(report, '[]'),
+                        '$',
+                        JSON_OBJECT('type', 'video', 'time', '" . now()->toDateTimeString() . "' , 'description' , '".$request->reason."' , 'path' , '". $videoName ."')
+                        )
+                    ")
+                ]);
+
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'No file received'], 400);
+    }
+
+
     public function report(Request $request, $examId)
     {
         if ($request->hasFile('file')) {
