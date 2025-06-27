@@ -21,11 +21,20 @@
 
 @section('section')
     <section class="audio">
-        <div>
-            <h3>Listen to the recording</h3>
-            <audio controls>
-                <source src="{{asset('uploads/report/' . $name)}}" type="audio/wav">
-            </audio>
-        </div>
+        @if ($type == 'audio')
+            <div>
+                <h3>Listen to the recording</h3>
+                <audio controls>
+                    <source src="{{asset('uploads/report/' . $name)}}" type="audio/wav">
+                </audio>
+            </div>
+        @else
+            <div>
+                <h3>Watch the video</h3>
+                <video controls style="width: 500px;">
+                    <source src="{{asset('uploads/report/' . $name)}}" type="video/webm">
+                </video>
+            </div>
+        @endif
     </section>
 @endsection

@@ -51,7 +51,7 @@ Route::get('/exam/next-question/refresh/{id}', [ExamController::class, 'refresh'
 
 Route::post('/exam/report/{examId}', [ExamController::class, 'report'])->middleware('auth');
 Route::post('/exam/report/video/{examId}', [ExamController::class, 'reportVideo'])->middleware('auth');
-Route::get('/exam/report/prove/{name}', [ExamController::class, 'prove'])->middleware('auth');
+Route::get('/exam/report/prove/{name}/{type}', [ExamController::class, 'prove'])->middleware('auth');
 
 Route::get('/student/review/{id}', [StudentController::class, 'review'])->middleware('auth');
 

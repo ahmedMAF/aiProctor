@@ -31,18 +31,16 @@
                     </thead>
                     <tbody>
                         @foreach ($Data as $violation)
-                        <tr>
-                            <td>{{$violation['type']}}</td>
-                            <td>{{$violation['time']}}</td>
-                            <td>{{$violation['description']}}</td>
-                            <td><a href="/exam/report/prove/{{$violation['path']}}">
+                            <tr>
+                                <td>{{$violation['type']}}</td>
+                                <td>{{$violation['time']}}</td>
+                                <td>{{$violation['description']}}</td>
                                 @if ($violation['type'] == 'audio')
-                                    Listen
+                                    <td><a href="/exam/report/prove/{{$violation['path']}}/audio">Listen</a></td>
                                 @else
-                                    Watch
+                                    <td><a href="/exam/report/prove/{{$violation['path']}}/video">Watch</a></td>
                                 @endif
-                            </a></td>
-                        </tr>
+                            </tr>
                         @endforeach
                     </tbody>
                 </Table>

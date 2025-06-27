@@ -168,8 +168,8 @@ class ExamController extends Controller
         return response()->json(['success' => false, 'message' => 'No file received'], 400);
     }
 
-    public function prove($name)
+    public function prove($name , $type)
     {
-        return view('prove', ['name' => $name]);
+        return view('prove', ['name' => $name , 'type' => $type]);
     }
 }
