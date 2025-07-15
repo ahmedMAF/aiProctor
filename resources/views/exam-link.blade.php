@@ -19,11 +19,19 @@
                 <canvas id="canvas"></canvas>
                 <a href="/student/exam/{{$id}}" class="next" id="next">Next</a>
             </div>
+            <div>
+                <p id="result" style="display: none">Please wait...</p>
+                <a id="retry" style="display: none" href="/student/examlink/{{$id}}" class="next">Retry</a>
+            </div>
         </div>
     </div>
 </section>
 @endsection
 
 @section('js')
+<script>
+    let fullName = "{{$studentName}}";
+    console.log(fullName);
+</script>
 <script src="{{asset('JS/exam-link.js')}}"></script>
 @endsection

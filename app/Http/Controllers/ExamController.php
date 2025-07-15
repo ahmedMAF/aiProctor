@@ -24,7 +24,7 @@ class ExamController extends Controller
         if ($userExam) {
             return view("exam-not-open", ["done" => 1]);
         }
-        return view("exam-link", ['id' => $id]);
+        return view("exam-link", ['id' => $id , 'studentName' => $user->name]);
     }
 
     public function takeExam(Request $request, $id)
