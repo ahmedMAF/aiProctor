@@ -21,7 +21,7 @@ const LANDMARK_INDICES = {
 // State
 let mediaRecorder;
 let recordedChunks = [];
-let dataArray = JSON.parse(localStorage.getItem('myData')) || {};
+let dataArray = JSON.parse(sessionStorage.getItem('myData')) || {};
 let lastResult = "";
 let noFaceStartTime = null;
 let isProcessingEvent = false; // flag to prevent overlapping events
@@ -50,7 +50,7 @@ let detectionInterval = null;
 let calibrationIndicator = null;
 
 async function initFaceAPI() {
-    let cal = JSON.parse(localStorage.getItem('calibrationData'));
+    let cal = JSON.parse(sessionStorage.getItem('calibrationData'));
 
     if (cal) {
         calibrationData = cal;
@@ -158,8 +158,8 @@ function onFaceDetected(landmarks) {
 
         attemptAutoCalibration(landmarks);
     } else {
-        if (calibrationIndicator)
-            removeCalibrationIndicator();
+        //if (calibrationIndicator)
+           // removeCalibrationIndicator();
 
         if (!started) {
             // TODO: Send start time here.
@@ -205,7 +205,7 @@ function attemptAutoCalibration(landmarks) {
 
         if (stableFramesCount > 30) {
             calibrationData = { leftEyeCenter, rightEyeCenter, headPosition, eyeDistance };
-            localStorage.setItem('calibrationData', JSON.stringify(calibrationData));
+            sessionStorage.setItem('calibrationData', JSON.stringify(calibrationData));
             isCalibrated = true;
         }
     } else {
@@ -257,12 +257,12 @@ function detectOffScreenGaze(landmarks) {
 
 function addToArray(item) {
     dataArray[item] = (dataArray[item] || 0) + 1;
-    localStorage.setItem('myData', JSON.stringify(dataArray));
+    sessionStorage.setItem('myData', JSON.stringify(dataArray));
 }
 
 function sendToServer() {
     const csrfToken2 = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    const stored = localStorage.getItem('myData');
+    const stored = sessionStorage.getItem('myData');
     if (!stored) return;
 
     const data = JSON.parse(stored);
@@ -277,8 +277,9 @@ function sendToServer() {
 
 function createCalibrationIndicator() {
     const indicator = document.createElement('div');
+    const div = document.getElementById('videoCal');
     indicator.id = 'calibration-indicator';
-    indicator.style.position = 'fixed';
+    indicator.style.position = 'absolute';
     indicator.style.top = '50%';
     indicator.style.left = '50%';
     indicator.style.transform = 'translate(-50%, -50%)';
@@ -289,16 +290,16 @@ function createCalibrationIndicator() {
     indicator.style.zIndex = '100000';
     indicator.style.pointerEvents = 'none';
     indicator.style.boxShadow = '0 0 10px rgba(255, 0, 0, 0.5)';
-    document.body.appendChild(indicator);
+    div.appendChild(indicator);
     return indicator;
 }
 
-function removeCalibrationIndicator() {
-    if (calibrationIndicator && document.body.contains(calibrationIndicator)) {
-        document.body.removeChild(calibrationIndicator);
-    }
-    calibrationIndicator = null;
-}
+// function removeCalibrationIndicator() {
+//     if (calibrationIndicator && document.body.contains(calibrationIndicator)) {
+//         document.body.removeChild(calibrationIndicator);
+//     }
+//     calibrationIndicator = null;
+// }
 
 // async function startRecording() {
 //     console.log("Starting video recording...");
