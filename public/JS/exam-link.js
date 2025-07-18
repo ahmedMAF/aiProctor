@@ -50,6 +50,11 @@ next.onclick = async function (e) {
         canvas.style.display = "none";
         result.style.display = "block";
 
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+
         await compareFaces();
         await extractText();
 
@@ -60,6 +65,7 @@ next.onclick = async function (e) {
         else {
             result.innerHTML = "Verification failed, please try again";
             retry.style.display = "block";
+            result.style.color = "#e70d0d";
         }
     }
 }

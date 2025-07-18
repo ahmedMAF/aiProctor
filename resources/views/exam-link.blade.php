@@ -20,7 +20,7 @@
                 <a href="/student/exam/{{$id}}" class="next" id="next">Next</a>
             </div>
             <div>
-                <p id="result" style="display: none">Please wait...</p>
+                <p id="result" style="display: none; font-size: 20px; font-weight: bold;">Please wait...</p>
                 <a id="retry" style="display: none" href="/student/examlink/{{$id}}" class="next">Retry</a>
             </div>
         </div>

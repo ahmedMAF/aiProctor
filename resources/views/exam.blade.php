@@ -13,7 +13,7 @@
 @section('section')
     <section>
         <div class="continer" style="position: relative">
-            <div class="videoCal" id="videoCal" style="display: flex; justify-content: center;"></div>
+            <div class="videoCal" id="videoCal" style="display: flex; justify-content: center; background-color: var(--color-bg);"></div>
             <div class="page">
                 <div class="left-qes">
                     <p id="time" class="timer">{{ $m }}:{{ $s }}</p>
@@ -28,8 +28,7 @@
                     <p id="mark" class="grade">Grade: <span id="grade">{{ $question->grade }}</span> Mark</p>
                     <input id="q-id" type="text" hidden value="{{ $question->id }}">
                     <div class="option">
-                        <div style="{{ $question->type == 1 ? 'display: block;' : 'display: none;' }}" class="mc"
-                            id="mc">
+                        <div style="{{ $question->type == 1 ? 'display: block;' : 'display: none;' }}" class="mc" id="mc">
                             <div>
                                 <input id="first" type="radio" name="answer" value="0">
                                 <label class="op" for="first">{{ $question->answers[0] }}</label>
@@ -49,8 +48,7 @@
                                     for="fourth">{{ $question->type == 1 ? $question->answers[3] : '' }}</label>
                             </div>
                         </div>
-                        <div style="{{ $question->type == 2 ? 'display: block;' : 'display: none;' }}" class="tof"
-                            id="tof">
+                        <div style="{{ $question->type == 2 ? 'display: block;' : 'display: none;' }}" class="tof" id="tof">
                             <div>
                                 <input id="true" type="radio" name="answer" value="0">
                                 <label for="true">true</label>
@@ -86,10 +84,10 @@
 
         const ortScript = document.createElement('script');
         ortScript.src = "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.14.0/dist/ort.js";
-        ortScript.onload = function() {
+        ortScript.onload = function () {
             const vadScript = document.createElement('script');
             vadScript.src = "{{ asset('JS/vad.js') }}";
-            vadScript.onload = function() {
+            vadScript.onload = function () {
                 startMic();
             };
             document.head.appendChild(vadScript);
@@ -108,12 +106,12 @@
                         const formData = new FormData();
                         formData.append('file', wavBlob, 'speech.wav');
                         fetch(`/exam/report/${examId}`, {
-                                method: 'POST',
-                                headers: {
-                                    'X-CSRF-TOKEN': csrfToken
-                                },
-                                body: formData
-                            })
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': csrfToken
+                            },
+                            body: formData
+                        })
                             .then(response => response.json())
                             .catch(error => console.error('Upload error:', error))
 
