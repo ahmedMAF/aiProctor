@@ -13,7 +13,13 @@
 @section('section')
     <section>
         <div class="continer" style="position: relative">
-            <div class="videoCal" id="videoCal" style="display: flex; justify-content: center; background-color: var(--color-bg);"></div>
+            <div class="videoCal" id="videoCal"
+                style="display: flex; justify-content: center; background-color: var(--color-bg);">
+                <div style="text-align: center; position: absolute;">
+                    Please focus your gaze on the red dot that will appear and keep it centered between your eyes for 5
+                    seconds.
+                </div>
+            </div>
             <div class="page">
                 <div class="left-qes">
                     <p id="time" class="timer">{{ $m }}:{{ $s }}</p>
