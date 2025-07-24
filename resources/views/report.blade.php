@@ -17,6 +17,7 @@
             </div>
             @php
                 $Data = json_decode($student->report, true);
+                $emotions = null;
             @endphp
             <div class="violation">
                 <h3>Violations and Breaches</h3>
@@ -31,6 +32,12 @@
                     </thead>
                     <tbody>
                         @foreach ($Data as $violation)
+                            @if ($violation['type'] == 'emotion')
+                                @php
+                                    $emotions = $violation;  
+                                @endphp
+                                @continue
+                            @endif
                             <tr>
                                 <td>{{$violation['type']}}</td>
                                 <td>{{$violation['time']}}</td>
@@ -44,6 +51,12 @@
                         @endforeach
                     </tbody>
                 </Table>
+            </div>
+            <div class="emotion">
+                @php
+                    $emotions = json_decode($emotions['data'], true);
+                @endphp
+                {{$emotions['neutral']}}
             </div>
         </div>
     </section>

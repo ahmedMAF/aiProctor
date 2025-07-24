@@ -24,7 +24,7 @@ class ExamController extends Controller
         if ($userExam) {
             return view("exam-not-open", ["done" => 1]);
         }
-        return view("exam-link", ['id' => $id , 'studentName' => $user->name]);
+        return view("exam-link", ['id' => $id, 'studentName' => $user->name]);
     }
 
     public function takeExam(Request $request, $id)
@@ -127,7 +127,7 @@ class ExamController extends Controller
                         JSON_ARRAY_APPEND(
                         IFNULL(report, '[]'),
                         '$',
-                        JSON_OBJECT('type', 'video', 'time', '" . now()->toDateTimeString() . "' , 'description' , '".$request->reason."' , 'path' , '". $videoName ."')
+                        JSON_OBJECT('type', 'video', 'time', '" . now()->toDateTimeString() . "' , 'description' , '" . $request->reason . "' , 'path' , '" . $videoName . "')
                         )
                     ")
                 ]);
@@ -157,7 +157,7 @@ class ExamController extends Controller
                         JSON_ARRAY_APPEND(
                         IFNULL(report, '[]'),
                         '$',
-                        JSON_OBJECT('type', 'audio', 'time', '" . now()->toDateTimeString() . "' , 'description' , 'audio detected' , 'path' , '". $fileName ."')
+                        JSON_OBJECT('type', 'audio', 'time', '" . now()->toDateTimeString() . "' , 'description' , 'audio detected' , 'path' , '" . $fileName . "')
                         )
                     ")
                 ]);
@@ -168,8 +168,34 @@ class ExamController extends Controller
         return response()->json(['success' => false, 'message' => 'No file received'], 400);
     }
 
-    public function prove($name , $type)
+    public function reportEmotion(Request $request, $examId)
     {
-        return view('prove', ['name' => $name , 'type' => $type]);
+        if ($request->all()) {
+            $user = $request->user()->id;
+
+            $jsonData = json_encode($request->all(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+            $escapedJsonData = addslashes($jsonData);
+            
+            DB::table('user_exam')
+                ->where('user_id', $user)
+                ->where('exam_id', $examId)
+                ->update([
+                    'report' => DB::raw("
+                        JSON_ARRAY_APPEND(
+                        IFNULL(report, '[]'),
+                        '$',
+                        JSON_OBJECT('type', 'emotion', 'data' , '{$escapedJsonData}')
+                        )
+                    ")
+                ]);
+
+            return response()->json(['success' => true]);
+        }
+        return response()->json(['success' => false, 'message' => 'No data received'], 400);
+    }
+
+    public function prove($name, $type)
+    {
+        return view('prove', ['name' => $name, 'type' => $type]);
     }
 }

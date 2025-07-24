@@ -268,7 +268,7 @@ function sendToServer() {
     const data = JSON.parse(stored);
     if (!Object.keys(data).length) return;
 
-    fetch(`/exam/report/video/${examId}`, {
+    fetch(`/exam/report/emotion/${examId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken2 },
         body: JSON.stringify(data)
@@ -427,7 +427,7 @@ async function sendProofVideo(blob, reason) {
 //         console.error('Network error:', err);
 //     }
 // }
-
+//300000
 // Start everything
 initFaceAPI()
-setInterval(sendToServer, 300000);
+setInterval(sendToServer, 10000);
