@@ -41,7 +41,7 @@ next.onclick = async function (e) {
         p.innerHTML = "Take a clear picture of your identity";
     }
     else if (counter == 2) {
-        e.preventDefault();
+        //e.preventDefault();
         capturedIdentity = await getBlobFromCanvas(canvas);
         canvasBlock.style.display = "none";
         //printCanvasImage(capturedIdentity, capturedFace);
@@ -55,7 +55,7 @@ next.onclick = async function (e) {
             behavior: 'smooth'
         });
 
-        await compareFaces();
+        /*await compareFaces();
         await extractText();
 
         if (faceOk && nameOk) {
@@ -66,7 +66,7 @@ next.onclick = async function (e) {
             result.innerHTML = "Verification failed, please try again";
             retry.style.display = "block";
             result.style.color = "#e70d0d";
-        }
+        }*/
     }
 }
 

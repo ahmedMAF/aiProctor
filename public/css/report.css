@@ -45,3 +45,7 @@ section .violation table a{
     text-decoration: none;
     color: var(--color-bg2);
 }
+section .emotion{
+    margin-bottom: 40px;
+    margin-top: 40px;
+}

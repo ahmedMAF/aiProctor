@@ -55,8 +55,49 @@
             <div class="emotion">
                 @php
                     $emotions = json_decode($emotions['data'], true);
+                    $emotionsPercentage = [];
+                    $dangerScore = 0;
+                    $weights = [
+                        'fear' => 3,
+                        'sad' => 2,
+                        'angry' => 3,
+                        'neutral' => 0,
+                        'happy' => 1,
+                        'surprised' => 1.5,
+                        'tired' => 2,
+                        'disgust' => 2.5,
+                        'nervous' => 2.5,
+                        'worried' => 2.5,
+                        'confused' => 2,
+                        'indifferent' => 2,
+                    ];
+
+                    $emotionsTotal = array_sum($emotions);
+
+                    foreach ($emotions as $key => $value) {
+                        $emotionsPercentage[$key] = ($value / $emotionsTotal) * 100;
+                    }
+
+                    foreach ($emotions as $key => $value) {
+                        if (array_key_exists($key, $weights)) {
+                            $dangerScore += ($value * $weights[$key]);
+                        }
+                    }
                 @endphp
-                {{$emotions['neutral']}}
+                <div>
+                    <p>Below is the distribution of facial expressions detected during the exam, reflecting the student’s
+                        overall emotional state throughout the session.</p>
+                    @foreach ($emotionsPercentage as $emotion => $percent)
+                        <div>
+                            <span>{{$emotion}}: </span>
+                            <span>{{ floor($percent)}}%</span>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="danger-score">
+                    <p>Final danger score derived from facial expression analysis during the exam</p>
+                    <span>Danger Score: {{$dangerScore}}</span>
+                </div>
             </div>
         </div>
     </section>
