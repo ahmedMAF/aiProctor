@@ -21,7 +21,7 @@ section .violation h3{
     text-align: center;
     margin: 15px 0px 30px 0px;
 }
-section .violation{
+section .violation , .emotion{
     background-color: var(--color-bg1 , #2e3267);
     box-sizing: border-box;
     padding: 20px;
@@ -48,4 +48,23 @@ section .violation table a{
 section .emotion{
     margin-bottom: 40px;
     margin-top: 40px;
+}
+section .emotion .percent{
+    font-weight: bold;
+}
+section .emotion li{
+    margin-bottom: 5px;
+}
+section .danger-score .score{
+    margin-top: 40px;
+    font-weight: bold;
+}
+section .danger-score span{
+    display: block;
+    margin: 10px 0px;
+    padding-left: 20px;
+}
+section .danger-score .message{
+    margin-top: 10px;
+    padding-left: 20px;
 }

@@ -83,20 +83,40 @@
                             $dangerScore += ($value * $weights[$key]);
                         }
                     }
+
+                    if ($dangerScore >= 70) {
+                        $level = "High";
+                        $message = "Significant emotional signals were detected (e.g., fear, nervousness, anger). Immediate review of the session is recommended.";
+                    } elseif ($dangerScore >= 40) {
+                        $level = "Moderate";
+                        $message = "Moderate emotional activity detected. Please review the session to confirm if any unusual behavior occurred.";
+                    } else {
+                        $level = "Low";
+                        $message = "No concerning emotional patterns detected. The session appears within normal emotional range.";
+                    }
+
+
                 @endphp
                 <div>
-                    <p>Below is the distribution of facial expressions detected during the exam, reflecting the student’s
-                        overall emotional state throughout the session.</p>
-                    @foreach ($emotionsPercentage as $emotion => $percent)
-                        <div>
-                            <span>{{$emotion}}: </span>
-                            <span>{{ floor($percent)}}%</span>
-                        </div>
-                    @endforeach
+                    <p class="percent">Below is the distribution of facial expressions detected during the exam, reflecting
+                        the student’s
+                        overall emotional state throughout the session</p>
+                    <div>
+                        <ol>
+                            @foreach ($emotionsPercentage as $emotion => $percent)
+                                <li>
+                                    <span>{{$emotion}}: </span>
+                                    <span>{{ floor($percent)}}%</span>
+                                </li>
+                            @endforeach
+                        </ol>
+                    </div>
                 </div>
                 <div class="danger-score">
-                    <p>Final danger score derived from facial expression analysis during the exam</p>
-                    <span>Danger Score: {{$dangerScore}}</span>
+                    <p class="score">Final danger score derived from facial expression analysis during the exam</p>
+                    <span>Emotional Alert Score: {{$dangerScore}} </span>
+                    <span>Level: {{$level}}</span>
+                    <p class="message">{{$message}}</p>
                 </div>
             </div>
         </div>
