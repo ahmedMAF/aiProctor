@@ -7,22 +7,37 @@ let retry = document.getElementById("retry");
 let result = document.getElementById("result");
 let p = document.getElementById("p");
 let context = canvas.getContext('2d');
+let start = document.getElementById("start");
+let agree = document.getElementById("agree");
 let capturedFace = null;
 let capturedIdentity = null;
 let counter = 0;
 let nameOk = false;
 let faceOk = false;
 
-//open the camera 
-navigator.mediaDevices.getUserMedia({ video: true })
-    .then(stream => {
-        video.srcObject = stream;
-        video.onloadedmetadata = () => {
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-        };
-    })
-    .catch(error => { console.error("ُError", error); });
+
+agree.onchange = function () {
+    if (agree.checked) {
+        start.style.display = "block";
+    }
+    else {
+        start.style.display = "none";
+    }
+}
+
+start.onclick = function () {
+    start.parentElement.parentElement.parentElement.style.display = "none";
+    //open the camera 
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+            video.srcObject = stream;
+            video.onloadedmetadata = () => {
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+            };
+        })
+        .catch(error => { console.error("ُError", error); });
+}
 
 
 //take a photo

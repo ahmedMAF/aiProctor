@@ -8,7 +8,7 @@
 
 @section('section')
 <section>
-    <div class="continer">
+    <div class="continer" style="position: relative">
         <div class="page">
             <div class="video">
                 <p id="p">Take a clear picture of your face</p>
@@ -22,6 +22,24 @@
             <div>
                 <p id="result" style="display: none; font-size: 20px; font-weight: bold;">Please wait...</p>
                 <a id="retry" style="display: none" href="/student/examlink/{{$id}}" class="next">Retry</a>
+            </div>
+        </div>
+        <div class="instraction">
+            <div class="content">
+                <ol>
+                    <li>instraction</li>
+                    <li>instraction</li>
+                    <li>instraction</li>
+                    <li>instraction</li>
+                    <li>instraction</li>
+                    <li>instraction</li>
+                    <li>instraction</li>
+                </ol>
+                <div class="agree">
+                    <input type="checkbox" id="agree">
+                    <label for="agree">I have read all of the above carefully and agree to it</label>
+                    <button id="start" style="display: none">Start</button>
+                </div>
             </div>
         </div>
     </div>
