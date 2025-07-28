@@ -10,7 +10,7 @@ section .page p {
 }
 
 section .page button,
-section .page a {
+section .page a, .instraction .agree .start {
     display: block;
     padding: 10px 20px;
     border-radius: 5px;
@@ -71,5 +71,22 @@ section .page .canvas .next {
     background-color: var(--color-bg1);
     min-height: 500px;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
-    padding-top: 25px;
+    padding: 25px;
+}
+
+.instraction h4 {
+    margin: 0px;
+}
+
+.instraction ol {
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+.instraction ol li {
+    margin-bottom: 10px;
+}
+
+.instraction .agree .start{
+    margin: 25px 0px 0px 0px;
 }

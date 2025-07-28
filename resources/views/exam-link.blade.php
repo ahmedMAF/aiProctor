@@ -26,6 +26,7 @@
         </div>
         <div class="instraction">
             <div class="content">
+                <h4>Please read the following instructions carefully before starting the exam</h4>
                 <ol>
                     <li>instraction</li>
                     <li>instraction</li>
@@ -38,7 +39,7 @@
                 <div class="agree">
                     <input type="checkbox" id="agree">
                     <label for="agree">I have read all of the above carefully and agree to it</label>
-                    <button id="start" style="display: none">Start</button>
+                    <button class="start" id="start" style="display: none">Start</button>
                 </div>
             </div>
         </div>
