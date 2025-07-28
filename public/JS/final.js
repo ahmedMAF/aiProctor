@@ -4,6 +4,7 @@ const NO_FACE_DELAY = 200; // ms
 const HORIZONTAL_THRESHOLD = 0.4;
 const VERTICAL_THRESHOLD = 0.4;
 const HEAD_MOVEMENT_FACTOR = 0.6;
+const CAL_FRAMES = 15;
 
 const EVENT = {
     NO_FACE: 0,
@@ -109,16 +110,14 @@ async function startCombinedDetection() {
 
             if (Date.now() - noFaceStartTime >= NO_FACE_DELAY && !hasSentNoFace) {
                 hasSentNoFace = true;
-                console.log("Noface detected");
-                recordProofVideo('Noface detected');
+                recordProofVideo(EVENT.NO_FACE, 'No face detected.');
             }
         }
         // Multiple faces detected
         else if (isMultiFaceState) {
             if (!hasSentMultipleFaces) {
                 hasSentMultipleFaces = true;
-                console.log("Multiface detected");
-                recordProofVideo('Multiface detected');
+                recordProofVideo(EVENT.MULTI_FACE, 'Multiple faces detected.');
             }
 
             noFaceStartTime = null;
@@ -128,9 +127,11 @@ async function startCombinedDetection() {
             onFaceDetected(detections[0].landmarks);
 
             if (currentEvent == EVENT.NO_FACE || currentEvent == EVENT.MULTI_FACE) {
-                console.log("we should stop recording now");
                 manualStop();
             }
+
+            if (!isCalibrated)
+                return;
 
             // Expression tracking logic
             const top = Object.entries(detections[0].expressions)
@@ -158,9 +159,6 @@ function onFaceDetected(landmarks) {
 
         attemptAutoCalibration(landmarks);
     } else {
-        //if (calibrationIndicator)
-           // removeCalibrationIndicator();
-
         if (!started) {
             // TODO: Send start time here.
             startExam();
@@ -200,10 +198,11 @@ function attemptAutoCalibration(landmarks) {
         Math.abs(eyeCenterY / 480 - 0.5) < 0.05;
 
     if (isLookingAtCenter) {
-        console.log("Auto-calibration in progress " + stableFramesCount + "...");
         stableFramesCount++;
 
-        if (stableFramesCount > 30) {
+        // TODO: stableFramesCount / CAL_FRAMES
+
+        if (stableFramesCount > CAL_FRAMES) {
             calibrationData = { leftEyeCenter, rightEyeCenter, headPosition, eyeDistance };
             sessionStorage.setItem('calibrationData', JSON.stringify(calibrationData));
             isCalibrated = true;
@@ -214,6 +213,9 @@ function attemptAutoCalibration(landmarks) {
 }
 
 function detectOffScreenGaze(landmarks) {
+    if (!isCalibrated)
+        return;
+
     const currentLeft = getCenterPoint(landmarks, LANDMARK_INDICES.LEFT_EYE);
     const currentRight = getCenterPoint(landmarks, LANDMARK_INDICES.RIGHT_EYE);
     const currentHead = getCenterPoint(landmarks, LANDMARK_INDICES.HEAD);
@@ -243,13 +245,11 @@ function detectOffScreenGaze(landmarks) {
 
     if (offScreenDirection && !hasSentOffScreen) {
         hasSentOffScreen = true;
-        console.log("offscreen detected");
-        recordProofVideo(EVENT.OFF_SCREEN);
+        recordProofVideo(EVENT.OFF_SCREEN, "Face offscreen detected.");
     } else if (!offScreenDirection) {
         hasSentOffScreen = false;
 
         if (currentEvent == EVENT.OFF_SCREEN) {
-            console.log("we should stop recording now");
             manualStop();
         }
     }
@@ -294,46 +294,14 @@ function createCalibrationIndicator() {
     return indicator;
 }
 
-// function removeCalibrationIndicator() {
-//     if (calibrationIndicator && document.body.contains(calibrationIndicator)) {
-//         document.body.removeChild(calibrationIndicator);
-//     }
-//     calibrationIndicator = null;
-// }
-
-// async function startRecording() {
-//     console.log("Starting video recording...");
-
-//     if (!mediaStream)
-//         mediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-
-//     mediaRecorder = new MediaRecorder(stream, {
-//         mimeType: 'video/webm'
-//     });
-//     recordedChunks = [];
-
-//     mediaRecorder.ondataavailable = (e) => {
-//         if (e.data.size > 0) {
-//             recordedChunks.push(e.data);
-//             // Maintain circular buffer for pre-event footage
-//             if (recordedChunks.length > MAX_CHUNKS_PRE_EVENT) {
-//                 recordedChunks.shift();
-//             }
-//         }
-//     };
-
-//     mediaRecorder.start(VID_CHUNK_DURATION);
-// }
-
-async function recordProofVideo(eventType) {
-    if (isProcessingEvent) {
-        console.log("trying to record for " + eventType + " while recording to " + currentEvent + ", aborting... ");
+async function recordProofVideo(eventType, eventDesc) {
+    if (!isCalibrated)
         return;
-    }
 
-    console.log("recording for " + eventType + "... ");
+    if (isProcessingEvent)
+        return;
 
-    currentEvent = eventType;
+    //currentEvent = eventType;
     isProcessingEvent = true;
 
     // get stream
@@ -371,9 +339,7 @@ async function recordProofVideo(eventType) {
 
     // grab the Blob and upload
     const blob = await dataPromise;
-    console.log("Recording complete for " + eventType + ", uploading...");
-    await sendProofVideo(blob, eventType);
-    console.log("Uploading complete for " + eventType);
+    await sendProofVideo(blob, eventDesc);
 
     // cleanup
     isProcessingEvent = false;
@@ -381,8 +347,6 @@ async function recordProofVideo(eventType) {
 }
 
 async function sendProofVideo(blob, reason) {
-    console.log(`sending proof video: ${reason}`);
-
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const formData = new FormData();
     formData.append('video', blob, 'proof.webm');
@@ -394,40 +358,11 @@ async function sendProofVideo(blob, reason) {
             headers: { 'X-CSRF-TOKEN': csrfToken },
             body: formData
         });
-        console.log(`Proof video sent: ${reason}`);
     } catch (err) {
         console.error('Upload error:', err);
     }
 }
 
-// async function sendBufferedWebMToServer(reason) {
-//     const csrfToken3 = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-//     const chunkCopy = [...recordedChunks];
-//     const blob = new Blob(chunkCopy, { type: 'video/webm' });
-
-//     const formData = new FormData();
-//     formData.append('video', blob, 'last-minute.webm');
-//     formData.append('reason', reason);  // add the reason
-
-//     try {
-//         const response = await fetch('/test', {
-//             method: 'POST',
-//             headers: {
-//                 'X-CSRF-TOKEN': csrfToken3
-//             },
-//             body: formData
-//         });
-
-//         if (!response.ok) {
-//             console.error('Upload failed:', await response.text());
-//         } else {
-//             console.log(`Upload successful: ${reason}`);
-//         }
-//     } catch (err) {
-//         console.error('Network error:', err);
-//     }
-// }
-//300000
 // Start everything
 initFaceAPI()
 setInterval(sendToServer, 10000);

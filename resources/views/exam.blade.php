@@ -104,6 +104,9 @@
             if (!myvad) {
                 myvad = await vad.MicVAD.new({
                     onSpeechEnd: (audio) => {
+                        if (!isCalibrated)
+                            return;
+
                         const wavBytes = vad.utils.encodeWAV(audio);
                         const wavBlob = new Blob([wavBytes], {
                             type: 'audio/wav'
