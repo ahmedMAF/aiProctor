@@ -365,4 +365,4 @@ async function sendProofVideo(blob, reason) {
 
 // Start everything
 initFaceAPI()
-setInterval(sendToServer, 10000);
+setInterval(sendToServer, 120000);
