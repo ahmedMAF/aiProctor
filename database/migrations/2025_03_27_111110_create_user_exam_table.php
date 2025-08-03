@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('user_exam', function (Blueprint $table) {
             $table->id();
-            $table->decimal('mark');
+            $table->decimal('mark')->nullable();
             $table->dateTime('start_time');
-            $table->dateTime('end_time');
-            $table->json('report');
+            $table->dateTime('end_time')->nullable();
+            $table->json('report')->nullable();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('exam_id')->constrained();
             $table->timestamps();

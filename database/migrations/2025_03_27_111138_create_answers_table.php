@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('answer');
+            $table->tinyInteger('answer')->nullable();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('exam_id')->constrained();
             $table->foreignId('question_id')->constrained();
