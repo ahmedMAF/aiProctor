@@ -12,7 +12,7 @@
     <!--start nav bar-->
     <nav>
         <div class="continer">
-            <a href="">Logo</a>
+            <a href=""><img style="width: 80px; margin-top: 10px;" src="{{asset('images/logo.png')}}" alt=""></a>
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/about">About</a></li>

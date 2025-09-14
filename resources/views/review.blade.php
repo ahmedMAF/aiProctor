@@ -8,6 +8,7 @@
 
 @section("section")
 <section>
+    <div class="layer"></div>
     <div class="continer">
         @php
         $i = 0;
