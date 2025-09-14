@@ -7,6 +7,7 @@
 @endsection
 
 @section('section')
+    <div class="layer"></div>
     <section>
         <div class="continer">
             <div class="info">
@@ -14,7 +15,8 @@
                     @csrf
                     @method('PATCH')
                     <div class="image">
-                        <img id="profileImage" src="{{ asset('uploads/profile_pics/' . $user->profile_pic) }}" alt="Error">
+                        <img id="profileImage" src="{{ asset('uploads/profile_pics/' . $user->profile_pic) }}"
+                            alt="Error">
                         <input id="pen" type="file" hidden name="image">
                         <label for="pen" class="pen"></label>
                     </div>

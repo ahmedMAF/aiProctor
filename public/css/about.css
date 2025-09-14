@@ -7,14 +7,18 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: white;
     padding: 0 0px;
+}
+
+nav ul {
+    padding: 0px;
+    margin: 0px;
 }
 
 header {
     text-align: center;
     padding: 2rem 1rem;
-    color: #fff;
+    color: #151515;
     margin-top: 150px
 }
 
@@ -35,14 +39,14 @@ section {
 
 h2 {
     font-size: 1.5rem;
-    color: white;
+    color: #151515;
     margin-bottom: 1rem;
 }
 
 p,
 ul {
     font-size: 1rem;
-    color: white;
+    color: #151515;
     margin-bottom: 1rem;
 }
 
@@ -61,16 +65,20 @@ ul {
     margin-top: 1rem;
     padding: 0.75rem 1.5rem;
     background-color: var(--color-bg2);
-    color: #fff;
+    color: white;
     text-decoration: none;
     border-radius: 5px;
 }
 
 .footer {
     text-align: center;
-    background-color: #0a2f5c;
+    background-color: var(--primary);
     color: white;
     padding: 50px 20px 30px 20px;
+}
+
+.footer p {
+    color: white;
 }
 
 .footer .links {
@@ -78,11 +86,14 @@ ul {
     justify-content: space-around;
     margin-bottom: 50px;
 }
-.footer .links .link , .footer .links .contact{
+
+.footer .links .link,
+.footer .links .contact {
     width: fit-content;
     padding: 0px 10px;
     margin-bottom: 30px;
 }
+
 .footer h4 {
     margin-bottom: 15px;
 }

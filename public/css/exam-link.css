@@ -27,7 +27,7 @@ section .page .video,
 section .page .canvas {
     margin: auto;
     padding: 35px;
-    background-color: var(--color-bg1, #2e3267);
+    background-color: rgba(0, 0, 0, 0.8);
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
     margin-bottom: 20px;
@@ -68,10 +68,11 @@ section .page .canvas .next {
     position: absolute;
     top: 0px;
     left: 0px;
-    background-color: var(--color-bg1);
+    background-color: white;
     min-height: 500px;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
     padding: 25px;
+    color: #151515;
 }
 
 .instraction h4 {

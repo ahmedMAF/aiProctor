@@ -7,6 +7,8 @@
 @endsection
 
 @section('section')
+    <div class="layer">
+    </div>
     <header>
         <h1>About Our AI-Powered Exam System</h1>
     </header>

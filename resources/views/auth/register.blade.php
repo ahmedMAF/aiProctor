@@ -7,7 +7,7 @@
 @endsection
 
 @section('section')
-<section>
+<section style="margin-top: 20px">
     <div class="content">
         <form action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
             @csrf

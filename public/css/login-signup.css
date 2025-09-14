@@ -1,7 +1,7 @@
 /*start section*/
 section{
     color: white;
-    background-color: var(--color-bg1 , #2e3267);
+    background-color: rgba(0, 0, 0, 0.8);
     box-sizing: border-box;
     padding: 40px;
     width: 100%;
@@ -25,10 +25,10 @@ section .content .input input{
     border-radius: 5px;
     margin-bottom: 15px;
     background-color: var(--color-bg , #1f2641);
-    color: white;
+    color: #555555;
 }
 section .content .input input::placeholder{
-    color: white;
+    color: #555555;
 }
 section .content .input input:focus{
     outline: none;

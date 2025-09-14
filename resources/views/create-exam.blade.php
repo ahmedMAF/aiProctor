@@ -7,6 +7,7 @@
 @endsection
 
 @section('section')
+<div class="layer"></div>
 <section>
     <div class="continer">
         <div class="info">

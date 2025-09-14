@@ -3,7 +3,7 @@ section{
     color: white;
 }
 section .table{
-    background-color: var(--color-bg1 , #2e3267);
+    background-color: rgba(0, 0, 0, 0.8);
     box-sizing: border-box;
     padding: 20px;
     width: 100%;
@@ -17,7 +17,7 @@ section .table table{
     width: 100%;
 }
 table, th, td {
-    border: 1px solid #584ef2;
+    border: 1px solid var(--color-bg2);
 }
 th, td {
     padding: 10px;

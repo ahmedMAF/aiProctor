@@ -3,7 +3,7 @@ html {
 }
 
 :root {
-    --primary: #0a2f5c;
+    --primary: #060606;
     --secondary: #f5f7fa;
     --accent: #0066cc;
     --text-dark: #222;
@@ -22,6 +22,7 @@ section {
 }
 
 .hero {
+    background-image: url("/images/hero-bg.png");
     color: var(--text-light);
     text-align: center;
     height: 100vh;
@@ -53,22 +54,20 @@ section {
     margin: 0px auto 25px auto;
     cursor: pointer;
     text-decoration: none;
-    font-size: 20px;
 }
 
 .features,
 .demo {
     padding-top: 100px;
     padding-bottom: 100px;
-    color: white;
-    background-color: var(--primary);
+    color: #151515;
 }
 
 .how-it-works,
 .faq {
     padding-top: 100px;
     padding-bottom: 100px;
-    color: white;
+    color: #151515;
 }
 
 .section-title {
@@ -84,10 +83,11 @@ section {
 }
 
 .feature {
-    background-color: var(--accent);
+    background-color: #ffffff;
+    color: #555555;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 20px -2px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: 0.3s;
 }
@@ -103,16 +103,17 @@ section {
 }
 
 .step {
-    background-color: var(--primary);
+    background-color: #ffffff;
+    box-shadow: 0 3px 20px -2px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    border-left: 5px solid var(--accent);
-    border-radius: 5px;
+    border-left: 5px solid var(--color-bg2);
     cursor: pointer;
     transition: 0.3s;
 }
 
 .step:hover {
-    background-color: var(--accent);
+    background-color: var(--color-bg2);
+    border-radius: 5px;
 }
 
 .demo iframe {
@@ -123,7 +124,8 @@ section {
 }
 
 .faq-item {
-    background-color: var(--primary);
+    background-color: #ffffff;
+    box-shadow: 0 3px 20px -2px rgba(0, 0, 0, 0.1);
     margin-bottom: 15px;
     border-radius: 6px;
     padding: 15px;
@@ -131,7 +133,7 @@ section {
 }
 
 .faq-item.active {
-    background-color: var(--accent);
+    background-color: var(--color-bg2);
 }
 
 .faq-answer {

@@ -27,7 +27,7 @@ agree.onchange = function () {
 
 start.onclick = function () {
     start.parentElement.parentElement.parentElement.style.display = "none";
-    //open the camera 
+    //open the camera
     navigator.mediaDevices.getUserMedia({ video: true })
         .then(stream => {
             video.srcObject = stream;
